@@ -1,0 +1,15 @@
+{
+	"cSpell.words": [
+		"cooldown",
+		"cooldowns",
+		"DOCKERHUB",
+		"GDSC",
+		"gdschongikoc",
+		"Hongik"
+	],
+
+	"editor.codeActionsOnSave": {
+		// for import sorting and stuff
+		"source.fixAll.eslint": true
+	}
+}
