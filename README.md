@@ -5,6 +5,8 @@
 1. [도커](/docs/contribution-guides/developers/docker) 와
    [Node.JS](https://nodejs.org)를 설치하세요
 
+   - Node.JS 최소 버젼: 16.6.0
+
 2. [디스코드 봇을 만드세요](https://discordjs.guide/preparations/setting-up-a-bot-application.html).
    모든 `Privileged Gateway Intents`또한 활성화시켜주세요.
 
@@ -33,4 +35,5 @@
 
 - [디스코드 개발자 문서](https://discord.com/developers/docs)
 - [Discord.js 가이드](https://discordjs.guide)
+- [Sapphire framework 문서](https://sapphirejs.dev/docs/General/Welcome)
 - [TypeScript 강좌](https://www.typescripttutorial.net)
