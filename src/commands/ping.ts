@@ -1,5 +1,6 @@
 import { isMessageInstance } from "@sapphire/discord.js-utilities"
 import { ChatInputCommand, Command } from "@sapphire/framework"
+import { ChatInputCommandInteraction } from "discord.js"
 
 export class PingCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
@@ -18,7 +19,7 @@ export class PingCommand extends Command {
 		)
 	}
 
-	public async chatInputRun(interaction: Command.ChatInputInteraction) {
+	public async chatInputRun(interaction: ChatInputCommandInteraction) {
 		const msg = await interaction.reply({
 			content: `핑`,
 			ephemeral: true,
