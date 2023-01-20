@@ -6,7 +6,7 @@
 		"start": "npm run clean && npm run build && node ."
 	},
 	"dependencies": {
-		"@sapphire/framework": "latest",
+		"@sapphire/framework": "^4.0.2",
 		"discord.js": "13.x",
 		"dotenv": "^16.0.3"
 	},
