@@ -1,7 +1,7 @@
 import { ChatInputCommand, Command } from "@sapphire/framework"
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js"
 
-export class PingCommand extends Command {
+export class ProfileCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options })
 	}
