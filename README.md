@@ -24,7 +24,9 @@
    npm install
    ```
 
-5. 봇 실행
+5. [API 서버](https://github.com/GDSC-OC/rating) 실행
+
+6. 봇 실행
 
    ```
    docker compose up --build
