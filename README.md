@@ -2,8 +2,7 @@
 
 ## 세팅
 
-1. [도커](/docs/contribution-guides/developers/docker) 와
-   [Node.JS](https://nodejs.org)를 설치하세요
+1. [도커](https://docker.com) 와 [Node.JS](https://nodejs.org) 설치
 
    - Node.JS 최소 버젼: 16.6.0
 
