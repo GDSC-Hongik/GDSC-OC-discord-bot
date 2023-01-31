@@ -29,7 +29,7 @@
 6. 봇 실행
 
    ```
-   docker compose up --build
+   npx nodemon
    ```
 
 ## 학습 자료
