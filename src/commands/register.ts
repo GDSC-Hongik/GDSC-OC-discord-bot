@@ -20,7 +20,10 @@ export class RegisterCommand extends Command {
 			embeds: [
 				new EmbedBuilder({
 					title: "링크를 눌러 로그인하세요",
-					description: process.env.SIGN_UP_URL,
+					description:
+						process.env.TESTING === "true"
+							? "http://localhost:5173"
+							: process.env.SIGN_UP_URL,
 				}),
 			],
 			ephemeral: true,
