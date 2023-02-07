@@ -13,6 +13,7 @@ RUN npm install
 FROM node:hydrogen-alpine AS builder
 WORKDIR /app
 COPY . .
+RUN touch src/lib/serviceAccountKey.json
 RUN npm install
 RUN npm run build
 
@@ -23,4 +24,5 @@ USER node
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/build/ .
+VOLUME lib/serviceAccountKey.json
 CMD ["node", "."]

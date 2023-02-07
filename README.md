@@ -28,7 +28,13 @@
 
 5. [API 서버](https://github.com/GDSC-OC/rating) 실행
 
-6. 봇 실행
+6. 웹사이트 실행
+
+   - https://github.com/GDSC-OC/website
+
+7. [여기](https://console.firebase.google.com/u/0/project/gdsc-oc-beta/settings/serviceaccounts/adminsdk)에서 service account key 샐성 후 `src/lib/serviceAccountKey.json`에 저장
+
+8. 봇 실행
 
    ```
    npm run dev

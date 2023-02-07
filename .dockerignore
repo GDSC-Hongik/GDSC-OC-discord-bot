@@ -4,6 +4,8 @@ _/
 # tsc compile output
 build/
 
+serviceAccountKey.json
+
 # Created by https://www.toptal.com/developers/gitignore/api/dotenv,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=dotenv,node
 
