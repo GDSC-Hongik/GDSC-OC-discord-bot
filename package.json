@@ -3,7 +3,8 @@
 	"scripts": {
 		"clean": "rimraf build",
 		"build": "tsc",
-		"start": "npm run clean && npm run build && node ."
+		"start": "npm run clean && npm run build && node .",
+		"dev": "npx nodemon"
 	},
 	"dependencies": {
 		"@sapphire/framework": "^4.0.2",

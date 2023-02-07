@@ -31,7 +31,7 @@
 6. 봇 실행
 
    ```
-   npx nodemon
+   npm run dev
    ```
 
 ## 학습 자료
