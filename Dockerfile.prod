@@ -22,5 +22,5 @@ FROM node:hydrogen-alpine AS runner
 USER node
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/build/ ./build/
+COPY --from=builder /app/build/ .
 CMD ["node", "."]
