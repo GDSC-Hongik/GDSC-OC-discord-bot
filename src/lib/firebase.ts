@@ -109,4 +109,20 @@ export async function setUserDiscordID(
 	cache.data.discordIDs = await refs.discordIDs.get()
 }
 
+/**
+ * Fetch a firebase user's UID associated with the given discord snowflake
+ */
+export async function fetchDiscordUserUID(
+	discordSnowflake: string
+): Promise<string | undefined> {
+	const cachedData = cache.data.discordIDs.data()
+	if (cachedData) return cachedData[discordSnowflake]
+
+	cache.data.discordIDs = await refs.discordIDs.get()
+	const newCachedData = cache.data.discordIDs.data()
+	if (newCachedData) return newCachedData[discordSnowflake]
+
+	return undefined
+}
+
 export { db }

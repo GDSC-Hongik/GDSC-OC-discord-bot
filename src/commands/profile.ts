@@ -1,5 +1,11 @@
-import { ChatInputCommand, Command } from "@sapphire/framework"
-import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js"
+import type { ChatInputCommand } from "@sapphire/framework"
+import { Command } from "@sapphire/framework"
+import type { ChatInputCommandInteraction } from "discord.js"
+import { EmbedBuilder } from "discord.js"
+import type { DocumentSnapshot } from "firebase-admin/firestore"
+
+import type User from "../interfaces/user"
+import { fetchDiscordUserUID, fetchUserDocument } from "../lib/firebase"
 
 export class ProfileCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
@@ -15,28 +21,49 @@ export class ProfileCommand extends Command {
 	}
 
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const embed = await this.generateEmbed(interaction)
+		const uid = await fetchDiscordUserUID(interaction.user.id)
+		if (!uid) return await this.replyUnregisteredAccount(interaction)
 
+		const userDoc = await fetchUserDocument(uid)
+		if (!userDoc || !userDoc.exists)
+			return await this.replyUnregisteredAccount(interaction)
+
+		return await this.replyProfile(interaction, userDoc)
+	}
+
+	async replyUnregisteredAccount(interaction: ChatInputCommandInteraction) {
 		await interaction.reply({
-			embeds: [embed],
+			embeds: [
+				new EmbedBuilder({
+					title: "등록된 계정이 없습니다!",
+					description: `이 디스코드 계정에 연동된 계정이 없습니다.
+<${process.env.SIGN_UP_URL}>에서 회원가입 후 </등록:1072386843506651197> 커맨드를 이용해 계정을 연동시켜주세요`,
+				}),
+			],
 			fetchReply: true,
 		})
 	}
 
-	async generateEmbed(
-		interaction: ChatInputCommandInteraction
-	): Promise<EmbedBuilder> {
+	async replyProfile(
+		interaction: ChatInputCommandInteraction,
+		userDoc: DocumentSnapshot<User>
+	) {
+		const userData = userDoc.data()
+		if (!userData) return await this.replyUnregisteredAccount(interaction)
+
+		console.log(JSON.stringify(userData))
+
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
 			// url: "<profile URL>",
-			description: `티어: X
-DevRating: XXXX
-포인트: XXX`,
+			description: `티어: ${this.formatData(userData.tier)}
+DevRating: ${this.formatData(userData.devRating)}
+포인트: ${this.formatData(userData.points)}`,
 			fields: [
 				{
 					name: "활동",
-					value: `메세지: XXX개
-포스팅: XXX개 + 좋아요 XXX개`,
+					value: `메세지: ${this.formatData(null)}개
+포스팅: ${this.formatData(null)}개 + 좋아요 ${this.formatData(null)}개`,
 				},
 			],
 		})
@@ -49,6 +76,13 @@ DevRating: XXXX
 				iconURL: interaction.guild?.iconURL() || undefined,
 			})
 
-		return embed
+		await interaction.reply({
+			embeds: [embed],
+			fetchReply: true,
+		})
+	}
+
+	formatData(data: unknown): string {
+		return `**${data || "???"}**`
 	}
 }
