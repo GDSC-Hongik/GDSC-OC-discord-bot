@@ -6,7 +6,8 @@
 		"firestore",
 		"GDSC",
 		"gdschongikoc",
-		"Hongik"
+		"Hongik",
+		"UNRANKED"
 	],
 
 	"editor.codeActionsOnSave": {

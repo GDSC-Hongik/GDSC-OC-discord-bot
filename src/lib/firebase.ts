@@ -11,6 +11,7 @@ import type {
 } from "firebase-admin/firestore"
 import { getFirestore } from "firebase-admin/firestore"
 
+import User from "../interfaces/user"
 import serviceAccount from "./serviceAccountKey.json"
 
 interface FirebaseRefs {
@@ -67,7 +68,10 @@ export async function initializeFirebase() {
 	if (!cache.users.nobody.exists) refs.users.doc("nobody").create({})
 }
 
-export async function fetchUserDocument(uid: string, forceUpdate = false) {
+export async function fetchUserDocument(
+	uid: string,
+	forceUpdate = false
+): Promise<DocumentSnapshot<User> | undefined> {
 	// return cached data if it exists
 
 	if (cache.users[uid] && forceUpdate) return cache.users[uid]
