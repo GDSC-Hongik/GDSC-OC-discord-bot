@@ -3,7 +3,7 @@ import type { ChatInputCommand } from "@sapphire/framework"
 import { Command } from "@sapphire/framework"
 import type { ChatInputCommandInteraction } from "discord.js"
 
-import { fetchUserData, setUserDiscordID } from "../lib/firebase"
+import { fetchUserDocument, setUserDiscordID } from "../lib/firebase"
 
 const optionName = "코드"
 
@@ -42,7 +42,7 @@ export class RegisterCommand extends Command {
 
 		// fetch user data
 
-		const user = await fetchUserData(uid)
+		const user = await fetchUserDocument(uid)
 		if (!user || !user.exists) return this.replyInvalidUID(interaction)
 
 		// set user discord ID

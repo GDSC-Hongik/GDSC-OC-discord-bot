@@ -67,7 +67,7 @@ export async function initializeFirebase() {
 	if (!cache.users.nobody.exists) refs.users.doc("nobody").create({})
 }
 
-export async function fetchUserData(uid: string, forceUpdate = false) {
+export async function fetchUserDocument(uid: string, forceUpdate = false) {
 	// return cached data if it exists
 
 	if (cache.users[uid] && forceUpdate) return cache.users[uid]
