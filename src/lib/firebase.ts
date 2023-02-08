@@ -1,5 +1,7 @@
 import type { ServiceAccount } from "firebase-admin/app"
 import { cert, initializeApp } from "firebase-admin/app"
+import type { Auth } from "firebase-admin/auth"
+import { getAuth } from "firebase-admin/auth"
 import type {
 	CollectionReference,
 	DocumentData,
@@ -12,13 +14,13 @@ import { getFirestore } from "firebase-admin/firestore"
 import serviceAccount from "./serviceAccountKey.json"
 
 interface FirebaseRefs {
-	discordIDs?: DocumentReference<DocumentData>
-	users?: CollectionReference<DocumentData>
+	discordIDs: DocumentReference<DocumentData>
+	users: CollectionReference<DocumentData>
 }
 
-interface Data {
-	connections: {
-		discordIDs?: DocumentSnapshot<DocumentData>
+interface Cache {
+	data: {
+		discordIDs: DocumentSnapshot<DocumentData>
 	}
 
 	users: {
@@ -26,10 +28,16 @@ interface Data {
 	}
 }
 
+let auth: Auth
 let db: Firestore
-const refs: FirebaseRefs = {}
-const data: Data = {
-	connections: {},
+const refs: FirebaseRefs = {
+	discordIDs: {} as DocumentReference<DocumentData>,
+	users: {} as CollectionReference<DocumentData>,
+}
+const cache: Cache = {
+	data: {
+		discordIDs: {} as DocumentSnapshot<DocumentData>,
+	},
 	users: {},
 }
 
@@ -41,21 +49,59 @@ export async function initializeFirebase() {
 	})
 
 	db = getFirestore()
+	auth = getAuth()
 
 	// get references
 
-	refs.discordIDs = db.collection("connections").doc("discordIDs")
+	refs.discordIDs = db.collection("data").doc("discordIDs")
 	refs.users = db.collection("users")
 
 	// get data
 
-	data.connections.discordIDs = await refs.discordIDs.get()
-	data.users.nobody = await refs.users.doc("nobody").get()
+	cache.data.discordIDs = await refs.discordIDs.get()
+	cache.users.nobody = await refs.users.doc("nobody").get()
 
 	// initialize database
 
-	if (!data.connections.discordIDs.exists) await refs.discordIDs.create({})
-	if (!data.users.nobody.exists) refs.users.doc("nobody").create({})
+	if (!cache.data.discordIDs.exists) await refs.discordIDs.create({})
+	if (!cache.users.nobody.exists) refs.users.doc("nobody").create({})
+}
+
+export async function fetchUserData(uid: string, forceUpdate = false) {
+	// return cached data if it exists
+
+	if (cache.users[uid] && forceUpdate) return cache.users[uid]
+
+	// fetch user data from firestore
+
+	const userDataRef = refs.users.doc(uid)
+	const userData = await userDataRef.get()
+
+	// return user data if it exists
+
+	if (userData.exists) return (cache.users[uid] = userData)
+
+	// create user data in DB
+
+	try {
+		await auth.getUser(uid)
+	} catch {
+		return undefined
+	}
+
+	await userDataRef.create({})
+
+	return (cache.users[uid] = await userDataRef.get())
+}
+
+/**
+ * Associates discord ID with a firebase account UID
+ */
+export async function setUserDiscordID(
+	firebaseUID: string,
+	discordSnowflake: string
+) {
+	refs.discordIDs.set({ [discordSnowflake]: firebaseUID }, { merge: true })
 }
 
 export { db }
