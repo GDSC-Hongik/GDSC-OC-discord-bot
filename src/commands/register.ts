@@ -29,12 +29,6 @@ export class RegisterCommand extends Command {
 	}
 
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
-		this.container.logger.info(
-			`${interaction.user} called "${
-				this.name
-			}" command with argument: "${interaction.options.getString(optionName)}"`
-		)
-
 		// get UID from command input
 
 		const uid = interaction.options.getString(optionName)

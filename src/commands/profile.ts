@@ -51,8 +51,6 @@ export class ProfileCommand extends Command {
 		const userData = userDoc.data()
 		if (!userData) return await this.replyUnregisteredAccount(interaction)
 
-		console.log(JSON.stringify(userData))
-
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
 			// url: "<profile URL>",
