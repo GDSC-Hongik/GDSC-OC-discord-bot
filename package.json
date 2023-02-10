@@ -10,7 +10,8 @@
 		"@sapphire/framework": "^4.0.2",
 		"discord.js": "^14.7.1",
 		"dotenv": "^16.0.3",
-		"firebase-admin": "^11.5.0"
+		"firebase-admin": "^11.5.0",
+		"zod": "^3.20.6"
 	},
 	"devDependencies": {
 		"@types/node": "^18.11.18",

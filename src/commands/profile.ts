@@ -4,8 +4,8 @@ import type { ChatInputCommandInteraction } from "discord.js"
 import { EmbedBuilder } from "discord.js"
 import type { DocumentSnapshot } from "firebase-admin/firestore"
 
-import type User from "../interfaces/user"
 import { fetchDiscordUserUID, fetchUserDocument } from "../lib/firebase"
+import type { User } from "../types/user"
 
 export class ProfileCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
