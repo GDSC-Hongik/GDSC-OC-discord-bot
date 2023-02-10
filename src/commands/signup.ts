@@ -26,7 +26,6 @@ export class SignUpCommand extends Command {
 							: process.env.SIGN_UP_URL,
 				}),
 			],
-			ephemeral: true,
 		})
 	}
 }

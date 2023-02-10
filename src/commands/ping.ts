@@ -22,7 +22,6 @@ export class PingCommand extends Command {
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
 		const msg = await interaction.reply({
 			content: `핑`,
-			ephemeral: true,
 			fetchReply: true,
 		})
 
