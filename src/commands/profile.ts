@@ -60,7 +60,7 @@ DevRating: ${this.formatData(userData.devRating)}
 			fields: [
 				{
 					name: "활동",
-					value: `메세지: ${this.formatData(null)}개
+					value: `출석: 총 ${this.formatData(userData.attendance.length)}일
 포스팅: ${this.formatData(null)}개 + 좋아요 ${this.formatData(null)}개`,
 				},
 			],
