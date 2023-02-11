@@ -3,7 +3,7 @@
 		"rootDir": "./src",
 		"outDir": "./build",
 
-		"target": "ES2019",
+		"target": "ES2022",
 		"module": "Node16",
 
 		"strict": true,
