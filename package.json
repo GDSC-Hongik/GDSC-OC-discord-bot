@@ -11,6 +11,7 @@
 		"discord.js": "^14.7.1",
 		"dotenv": "^16.0.3",
 		"firebase-admin": "^11.5.0",
+		"moment-timezone": "^0.5.40",
 		"zod": "^3.20.6"
 	},
 	"devDependencies": {
