@@ -2,13 +2,13 @@ import type { DocumentData, DocumentSnapshot } from "firebase-admin/firestore"
 
 import type { User } from "../../types/user"
 import { userSchema } from "../../types/user"
-import { cache } from "."
+import { cache, refs } from "."
 import fixUser from "./fixUser"
 
 export default async function (
 	uid: string,
 	userDoc: DocumentSnapshot<DocumentData>
-): Promise<DocumentSnapshot<User> | undefined> {
+): Promise<DocumentSnapshot<User>> {
 	const parseResult = userSchema.safeParse(userDoc.data())
 
 	if (parseResult.success)
@@ -25,4 +25,6 @@ export default async function (
 	)
 
 	fixUser(uid)
+
+	return (await refs.users.doc(uid).get()) as DocumentSnapshot<User>
 }
