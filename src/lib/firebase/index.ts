@@ -15,6 +15,7 @@ import fetchDiscordUserUID from "./fetchDiscordUserUID"
 import fetchUserDocument from "./fetchUserDocument"
 import fixUser from "./fixUser"
 import initializeFirebase from "./initializeFirebase"
+import setUserData from "./setUserData"
 import setUserDiscordID from "./setUserDiscordID"
 
 export let auth: Auth
@@ -62,5 +63,6 @@ export {
 	fetchUserDocument,
 	fixUser,
 	initializeFirebase,
+	setUserData,
 	setUserDiscordID,
 }
