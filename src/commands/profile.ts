@@ -81,6 +81,15 @@ DevRating: ${this.formatData(userData.devRating)}
 	}
 
 	formatData(data: unknown): string {
-		return `**${data || "???"}**`
+		let str = "???"
+
+		if (data) {
+			str = String(data)
+		} else {
+			if (data === 0) str = "0"
+			if (data === false) str = "false"
+		}
+
+		return `**${str}**`
 	}
 }
