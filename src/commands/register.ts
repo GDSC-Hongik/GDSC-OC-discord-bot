@@ -56,6 +56,7 @@ export class RegisterCommand extends Command {
 					description: "본인 인증 코드가 우효하지 않습니다.",
 				}),
 			],
+			ephemeral: true,
 		})
 	}
 
@@ -67,6 +68,7 @@ export class RegisterCommand extends Command {
 					description: "</프로필:1065974421203976202> 커맨드를 이용해보세요",
 				}),
 			],
+			ephemeral: true,
 		})
 	}
 }
