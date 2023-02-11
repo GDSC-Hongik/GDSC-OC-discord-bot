@@ -3,7 +3,8 @@ import type { ChatInputCommand } from "@sapphire/framework"
 import { Command } from "@sapphire/framework"
 import type { ChatInputCommandInteraction } from "discord.js"
 
-import { fetchUserDocument, setUserDiscordID } from "../lib/firebase"
+import { createUser, setUserDiscordID } from "../lib/firebase"
+import { CreateUserFailReason } from "../lib/firebase/createUser"
 
 const optionName = "코드"
 
@@ -30,30 +31,37 @@ export class RegisterCommand extends Command {
 
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
 		// get UID from command input
-
 		const uid = interaction.options.getString(optionName)
 		if (!uid) return this.replyInvalidUID(interaction)
 
-		// fetch user data
-
-		const user = await fetchUserDocument(uid)
-		if (!user || !user.exists) return this.replyInvalidUID(interaction)
+		// create user
+		const createUserResult = await createUser(uid)
+		if (!createUserResult.success)
+			return this.replyInvalidUID(interaction, createUserResult.reason)
 
 		// set user discord ID
-
 		setUserDiscordID(uid, interaction.user.id)
 
 		// return feedback
-
 		this.replySuccess(interaction)
 	}
 
-	async replyInvalidUID(interaction: ChatInputCommandInteraction) {
+	async replyInvalidUID(
+		interaction: ChatInputCommandInteraction,
+		reason?: CreateUserFailReason
+	) {
+		let description =
+			"본인 인증 코드가 우효하지 않습니다. </가입:1069853137529208852> 후 이용해주세요."
+
+		if (reason === CreateUserFailReason.USER_ALREADY_EXISTS)
+			description =
+				"인증이 이미 완료되었습니다. 재인증을 받기 위해선 관리자에게 연락하세요."
+
 		await interaction.reply({
 			embeds: [
 				new EmbedBuilder({
 					title: "본인 인증 실패!",
-					description: "본인 인증 코드가 우효하지 않습니다.",
+					description,
 				}),
 			],
 			ephemeral: true,

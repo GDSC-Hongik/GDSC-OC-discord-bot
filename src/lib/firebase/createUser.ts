@@ -1,9 +1,50 @@
+import type { DocumentSnapshot } from "firebase-admin/firestore"
+
+import type { User } from "../../types/user"
 import { defaultUser } from "../../types/user"
-import { refs } from "."
+import { auth, refs } from "."
 import cacheUser from "./cacheUser"
 
-export default async function (uid: string) {
+export enum CreateUserFailReason {
+	// eslint-disable-next-line no-unused-vars
+	USER_NOT_IN_AUTH,
+
+	// eslint-disable-next-line no-unused-vars
+	USER_ALREADY_EXISTS,
+}
+
+export default async function (
+	uid: string
+): Promise<
+	| { success: true; data: DocumentSnapshot<User> }
+	| { success: false; reason: CreateUserFailReason }
+> {
+	// check if user exists in firebase auth
+	try {
+		if (uid !== "nobody") await auth.getUser(uid)
+	} catch {
+		console.error(
+			`Failed create user "${uid}" int firestore. User does not exist in firebase auth.`
+		)
+
+		return { success: false, reason: CreateUserFailReason.USER_NOT_IN_AUTH }
+	}
+
 	const userDoc = refs.users.doc(uid)
+
+	// check if user already exists
+	if ((await userDoc.get()).exists) {
+		console.error(
+			`Failed to create user "${uid}" in firestore. User already exists.`
+		)
+
+		return { success: false, reason: CreateUserFailReason.USER_ALREADY_EXISTS }
+	}
+
+	// create, cache, and return user document
 	userDoc.set(defaultUser, { merge: true })
-	cacheUser(uid, await userDoc.get())
+	return {
+		success: true,
+		data: await cacheUser(uid, await userDoc.get()),
+	}
 }
