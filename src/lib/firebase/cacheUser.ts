@@ -26,5 +26,7 @@ export default async function (
 
 	fixUser(uid)
 
-	return (await refs.users.doc(uid).get()) as DocumentSnapshot<User>
+	return (cache.users[uid] = (await refs.users
+		.doc(uid)
+		.get()) as DocumentSnapshot<User>)
 }
