@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 enum DevRatingEvent {
 	UPDATE_ATTENDANCE = "updateAttendance",
 	INFO_SHARE = "infoShare",

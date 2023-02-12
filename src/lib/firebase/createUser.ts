@@ -6,10 +6,7 @@ import { auth, refs } from "."
 import cacheUser from "./cacheUser"
 
 export enum CreateUserFailReason {
-	// eslint-disable-next-line no-unused-vars
 	USER_NOT_IN_AUTH,
-
-	// eslint-disable-next-line no-unused-vars
 	USER_ALREADY_EXISTS,
 }
 
