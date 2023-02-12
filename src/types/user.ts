@@ -11,6 +11,9 @@ export const userSchema = z.object({
 
 	// array of "YYYY/MM/DD" formatted string (time zone: KST)
 	attendance: z.array(z.string()),
+
+	// array of discord role IDs
+	roles: z.array(z.string()),
 })
 
 export type User = z.infer<typeof userSchema>
@@ -19,4 +22,5 @@ export const defaultUser: User = {
 	tier: tierSchema.enum.UNRANKED,
 	points: 0,
 	attendance: [],
+	roles: [],
 }

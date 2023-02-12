@@ -12,7 +12,11 @@ dotenv.config()
 initializeFirebase()
 
 const client = new SapphireClient({
-	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildMembers,
+	],
 })
 
 // remove unused slash commands and stuff
