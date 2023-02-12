@@ -14,6 +14,7 @@ import createUser from "./createUser"
 import fetchUserDocument from "./fetchUserDocument"
 import fixUser from "./fixUser"
 import initializeFirebase from "./initializeFirebase"
+import { getRolePoint, setRolePoint } from "./rolePoints"
 import setUserData from "./setUserData"
 import setUserDiscordID from "./setUserDiscordID"
 import snowflake2UID from "./snowflake2UID"
@@ -23,12 +24,14 @@ export let db: Firestore
 
 interface FirebaseRefs {
 	channelsConfig: DocumentReference<DocumentData>
+	rolePoints: DocumentReference<DocumentData>
 	snowflake2uid: DocumentReference<DocumentData>
 	users: CollectionReference<DocumentData>
 }
 
 export const refs: FirebaseRefs = {
 	channelsConfig: {} as DocumentReference<DocumentData>,
+	rolePoints: {} as DocumentReference<DocumentData>,
 	snowflake2uid: {} as DocumentReference<DocumentData>,
 	users: {} as CollectionReference<DocumentData>,
 }
@@ -36,6 +39,7 @@ export const refs: FirebaseRefs = {
 export const botCache: BotCache = {
 	data: {
 		channelsConfig: {},
+		rolePoints: {},
 		snowflake2uid: {} as DocumentSnapshot<DocumentData>,
 	},
 	users: {},
@@ -55,8 +59,10 @@ export {
 	fetchUserDocument,
 	fixUser,
 	getChannelsConfig,
+	getRolePoint,
 	initializeFirebase,
 	setChannelsConfig,
+	setRolePoint,
 	setUserData,
 	setUserDiscordID,
 	snowflake2UID,

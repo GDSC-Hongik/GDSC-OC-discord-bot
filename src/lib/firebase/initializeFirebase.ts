@@ -25,6 +25,7 @@ export default async function () {
 
 async function initializeReferences() {
 	refs.channelsConfig = db.collection("data").doc("channelsConfig")
+	refs.rolePoints = db.collection("data").doc("rolePoints")
 	refs.snowflake2uid = db.collection("data").doc("snowflake2uid")
 	refs.users = db.collection("users")
 }
@@ -34,7 +35,12 @@ async function initializeDB() {
 	botCache.data.snowflake2uid = await refs.snowflake2uid.get()
 	if (!botCache.data.snowflake2uid.exists) await refs.snowflake2uid.create({})
 
-	// init "/data/channels"
+	// init "/data/rolePoints"
+	const rolePointsData = (await refs.rolePoints.get()).data()
+	if (rolePointsData) botCache.data.rolePoints = rolePointsData
+	else await refs.rolePoints.create({})
+
+	// init "/data/channelsConfig"
 	const channelData = (await refs.channelsConfig.get()).data()
 	if (channelData) botCache.data.channelsConfig = channelData as ChannelConfig
 	else await refs.channelsConfig.create({})

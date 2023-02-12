@@ -9,6 +9,7 @@ export interface ChannelConfig {
 export default interface BotCache {
 	data: {
 		channelsConfig: ChannelConfig
+		rolePoints: { [key: string]: number }
 		snowflake2uid: DocumentSnapshot<DocumentData>
 	}
 
