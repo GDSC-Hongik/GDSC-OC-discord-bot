@@ -1,17 +1,13 @@
 import moment from "moment-timezone"
 
-import {
-	fetchDiscordUserUID,
-	fetchUserDocument,
-	setUserData,
-} from "../firebase"
+import { fetchUserDocument, setUserData, snowflake2UID } from "../firebase"
 import snowflake2Time from "../snowflake2Time"
 
 export default async function (
 	userSnowflake: string,
 	messageSnowflake: string
 ): Promise<{ success: boolean }> {
-	const uid = await fetchDiscordUserUID(userSnowflake)
+	const uid = await snowflake2UID(userSnowflake)
 	if (!uid) {
 		printError(userSnowflake, "Unregistered user")
 		return { success: false }

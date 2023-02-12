@@ -4,7 +4,7 @@ import type { ChatInputCommandInteraction } from "discord.js"
 import { EmbedBuilder } from "discord.js"
 import type { DocumentSnapshot } from "firebase-admin/firestore"
 
-import { fetchDiscordUserUID, fetchUserDocument } from "../lib/firebase"
+import { fetchUserDocument, snowflake2UID } from "../lib/firebase"
 import type { User } from "../types/user"
 
 export class ProfileCommand extends Command {
@@ -21,7 +21,7 @@ export class ProfileCommand extends Command {
 	}
 
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const uid = await fetchDiscordUserUID(interaction.user.id)
+		const uid = await snowflake2UID(interaction.user.id)
 		if (!uid) return await this.replyUnregisteredAccount(interaction)
 
 		const userDoc = await fetchUserDocument(uid)

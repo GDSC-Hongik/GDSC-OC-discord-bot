@@ -11,12 +11,12 @@ import type BotCache from "../../types/botCache"
 import cacheUser from "./cacheUser"
 import { getChannelsConfig, setChannelsConfig } from "./channel"
 import createUser from "./createUser"
-import fetchDiscordUserUID from "./fetchDiscordUserUID"
 import fetchUserDocument from "./fetchUserDocument"
 import fixUser from "./fixUser"
 import initializeFirebase from "./initializeFirebase"
 import setUserData from "./setUserData"
 import setUserDiscordID from "./setUserDiscordID"
+import snowflake2UID from "./snowflake2UID"
 
 export let auth: Auth
 export let db: Firestore
@@ -52,7 +52,6 @@ export function setDB(newDB: Firestore) {
 export {
 	cacheUser,
 	createUser,
-	fetchDiscordUserUID,
 	fetchUserDocument,
 	fixUser,
 	getChannelsConfig,
@@ -60,4 +59,5 @@ export {
 	setChannelsConfig,
 	setUserData,
 	setUserDiscordID,
+	snowflake2UID,
 }
