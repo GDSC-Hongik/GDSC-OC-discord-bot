@@ -13,7 +13,5 @@ export default interface BotCache {
 		snowflake2uid: DocumentSnapshot<DocumentData>
 	}
 
-	users: {
-		[key: string]: DocumentSnapshot<User>
-	}
+	users: { [key: string]: DocumentSnapshot<User> }
 }
