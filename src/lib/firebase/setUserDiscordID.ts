@@ -7,6 +7,6 @@ export default async function setUserDiscordID(
 	firebaseUID: string,
 	discordSnowflake: string
 ) {
-	refs.discordIDs.set({ [discordSnowflake]: firebaseUID }, { merge: true })
-	cache.data.discordIDs = await refs.discordIDs.get()
+	refs.snowflake2uid.set({ [discordSnowflake]: firebaseUID }, { merge: true })
+	cache.data.snowflake2uid = await refs.snowflake2uid.get()
 }

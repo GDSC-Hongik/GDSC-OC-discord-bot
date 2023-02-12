@@ -6,11 +6,11 @@ import { cache, refs } from "."
 export default async function (
 	discordSnowflake: string
 ): Promise<string | undefined> {
-	const cachedData = cache.data.discordIDs.data()
+	const cachedData = cache.data.snowflake2uid.data()
 	if (cachedData) return cachedData[discordSnowflake]
 
-	cache.data.discordIDs = await refs.discordIDs.get()
-	const newCachedData = cache.data.discordIDs.data()
+	cache.data.snowflake2uid = await refs.snowflake2uid.get()
+	const newCachedData = cache.data.snowflake2uid.data()
 	if (newCachedData) return newCachedData[discordSnowflake]
 
 	return undefined

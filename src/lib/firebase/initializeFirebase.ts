@@ -23,18 +23,16 @@ export default async function () {
 }
 
 async function initializeReferences() {
-	refs.discordIDs = db.collection("data").doc("discordIDs")
+	refs.snowflake2uid = db.collection("data").doc("snowflake2uid")
 	refs.users = db.collection("users")
 }
 
 async function initializeDB() {
-	// initialize "/data/discordIDs"
+	// init "/data/snowflake2uid"
+	cache.data.snowflake2uid = await refs.snowflake2uid.get()
+	if (!cache.data.snowflake2uid.exists) await refs.snowflake2uid.create({})
 
-	cache.data.discordIDs = await refs.discordIDs.get()
-	if (!cache.data.discordIDs.exists) await refs.discordIDs.create({})
-
-	// initialize "/users"
-
+	// init "/users"
 	// "/users/nobody" exists because collections must have at least one document
 	createUser("nobody")
 }

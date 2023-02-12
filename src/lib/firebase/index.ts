@@ -22,18 +22,18 @@ export let auth: Auth
 export let db: Firestore
 
 interface FirebaseRefs {
-	discordIDs: DocumentReference<DocumentData>
+	snowflake2uid: DocumentReference<DocumentData>
 	users: CollectionReference<DocumentData>
 }
 
 export const refs: FirebaseRefs = {
-	discordIDs: {} as DocumentReference<DocumentData>,
+	snowflake2uid: {} as DocumentReference<DocumentData>,
 	users: {} as CollectionReference<DocumentData>,
 }
 
 interface Cache {
 	data: {
-		discordIDs: DocumentSnapshot<DocumentData>
+		snowflake2uid: DocumentSnapshot<DocumentData>
 	}
 
 	users: {
@@ -43,7 +43,7 @@ interface Cache {
 
 export const cache: Cache = {
 	data: {
-		discordIDs: {} as DocumentSnapshot<DocumentData>,
+		snowflake2uid: {} as DocumentSnapshot<DocumentData>,
 	},
 	users: {},
 }
