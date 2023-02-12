@@ -34,6 +34,11 @@ async function initializeDB() {
 	botCache.data.snowflake2uid = await refs.snowflake2uid.get()
 	if (!botCache.data.snowflake2uid.exists) await refs.snowflake2uid.create({})
 
+	// init "/data/channels"
+	const channelData = (await refs.channelsConfig.get()).data()
+	if (channelData) botCache.data.channelsConfig = channelData as ChannelConfig
+	else await refs.channelsConfig.create({})
+
 	// init "/users"
 	// "/users/nobody" exists because collections must have at least one document
 	createUser("nobody")
