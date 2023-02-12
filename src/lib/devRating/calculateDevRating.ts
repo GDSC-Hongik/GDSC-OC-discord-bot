@@ -1,4 +1,5 @@
 import { User } from "../../types/user"
+import { botCache } from "../firebase"
 
 /**
  * Calculates devRating of a user.
@@ -6,5 +7,17 @@ import { User } from "../../types/user"
  *   where x = 1 as of now
  */
 export default async function (user: User): Promise<number> {
-	return user.points * 1
+	const rolePoints = calculateRolePoints(user)
+
+	return rolePoints + user.points * 1
+}
+
+function calculateRolePoints(user: User) {
+	let rolePoints = 0
+
+	user.roles.map((role) => {
+		rolePoints += botCache.data.rolePoints[role]
+	})
+
+	return rolePoints
 }
