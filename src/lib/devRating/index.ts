@@ -1,3 +1,3 @@
-import updateAttendance from "./updateAttendance"
+import devRatingEvent from "./devRatingEvent"
 
-export { updateAttendance }
+export { devRatingEvent }
