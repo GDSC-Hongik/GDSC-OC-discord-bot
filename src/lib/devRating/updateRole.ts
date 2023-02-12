@@ -11,6 +11,7 @@ export default async function (
 	if (!uid) return logError(discordUserID, "Unregistered user")
 
 	// get all role ids except for "@everyone"
+	// tracking all roles in case a role gets points assigned in the future
 	const roles: string[] = []
 	rolesCollection.map((role) => {
 		if (role.name === "@everyone") return
