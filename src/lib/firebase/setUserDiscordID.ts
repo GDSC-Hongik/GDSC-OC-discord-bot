@@ -1,4 +1,4 @@
-import { cache, refs } from "."
+import { botCache, refs } from "."
 
 /**
  * Associates discord ID with a firebase account UID
@@ -8,5 +8,5 @@ export default async function setUserDiscordID(
 	discordSnowflake: string
 ) {
 	refs.snowflake2uid.set({ [discordSnowflake]: firebaseUID }, { merge: true })
-	cache.data.snowflake2uid = await refs.snowflake2uid.get()
+	botCache.data.snowflake2uid = await refs.snowflake2uid.get()
 }

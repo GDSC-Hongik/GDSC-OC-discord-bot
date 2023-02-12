@@ -7,8 +7,7 @@ import type {
 	Firestore,
 } from "firebase-admin/firestore"
 
-import type { User } from "../../types/user"
-//
+import type BotCache from "../../types/botCache"
 import cacheUser from "./cacheUser"
 import createUser from "./createUser"
 import fetchDiscordUserUID from "./fetchDiscordUserUID"
@@ -31,18 +30,9 @@ export const refs: FirebaseRefs = {
 	users: {} as CollectionReference<DocumentData>,
 }
 
-interface Cache {
+export const botCache: BotCache = {
 	data: {
-		snowflake2uid: DocumentSnapshot<DocumentData>
-	}
-
-	users: {
-		[key: string]: DocumentSnapshot<User>
-	}
-}
-
-export const cache: Cache = {
-	data: {
+		channelsConfig: {},
 		snowflake2uid: {} as DocumentSnapshot<DocumentData>,
 	},
 	users: {},

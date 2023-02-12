@@ -1,7 +1,7 @@
 import { DocumentSnapshot } from "firebase-admin/firestore"
 
 import { User } from "../../types/user"
-import { cache, refs } from "."
+import { botCache, refs } from "."
 import cacheUser from "./cacheUser"
 
 export default async function (
@@ -9,7 +9,7 @@ export default async function (
 	forceUpdate = false
 ): Promise<DocumentSnapshot<User> | undefined> {
 	// return cached data if it exists
-	if (!forceUpdate && cache.users[uid]) return cache.users[uid]
+	if (!forceUpdate && botCache.users[uid]) return botCache.users[uid]
 
 	// fetch user data from firestore
 	const userDoc = await refs.users.doc(uid).get()

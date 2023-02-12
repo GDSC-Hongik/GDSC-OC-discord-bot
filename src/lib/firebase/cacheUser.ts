@@ -2,7 +2,7 @@ import type { DocumentData, DocumentSnapshot } from "firebase-admin/firestore"
 
 import type { User } from "../../types/user"
 import { userSchema } from "../../types/user"
-import { cache, refs } from "."
+import { botCache, refs } from "."
 import fixUser from "./fixUser"
 
 export default async function (
@@ -12,7 +12,7 @@ export default async function (
 	const parseResult = userSchema.safeParse(userDoc.data())
 
 	if (parseResult.success)
-		return (cache.users[uid] = userDoc as DocumentSnapshot<User>)
+		return (botCache.users[uid] = userDoc as DocumentSnapshot<User>)
 
 	// if the user data does not pass the schema test
 
@@ -26,7 +26,7 @@ export default async function (
 
 	fixUser(uid)
 
-	return (cache.users[uid] = (await refs.users
+	return (botCache.users[uid] = (await refs.users
 		.doc(uid)
 		.get()) as DocumentSnapshot<User>)
 }
