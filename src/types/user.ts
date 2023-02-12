@@ -17,7 +17,6 @@ export type User = z.infer<typeof userSchema>
 
 export const defaultUser: User = {
 	tier: tierSchema.enum.UNRANKED,
-	devRating: 0,
 	points: 0,
 	attendance: [],
 }
