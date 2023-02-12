@@ -1,6 +1,7 @@
 import { EmbedBuilder } from "@discordjs/builders"
-import { ChatInputCommand, Command } from "@sapphire/framework"
-import { ChatInputCommandInteraction } from "discord.js"
+import type { ChatInputCommand } from "@sapphire/framework"
+import { Command } from "@sapphire/framework"
+import type { ChatInputCommandInteraction } from "discord.js"
 
 export class SignUpCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
