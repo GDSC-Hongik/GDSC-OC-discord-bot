@@ -7,12 +7,20 @@ function cacheChannelsConfig(key: keyof ChannelConfig, data: string): string {
 
 export async function getChannelsConfig(
 	channelName: keyof ChannelConfig
-): Promise<string> {
+): Promise<string | undefined> {
 	if (botCache.data.channelsConfig[channelName])
 		return botCache.data.channelsConfig[channelName] as string
 
-	const channelDoc = await refs.channelsConfig.get()
-	return cacheChannelsConfig(channelName, channelDoc.get(channelName))
+	const channelConfigDoc = await refs.channelsConfig.get()
+	const channelID = channelConfigDoc.get(channelName)
+
+	if (channelID) return cacheChannelsConfig(channelName, channelID)
+
+	console.error(
+		`Failed to get channel ID of ${channelName}. Data does not exist in DB.`
+	)
+
+	return undefined
 }
 
 export async function setChannelsConfig(
