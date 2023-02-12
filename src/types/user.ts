@@ -4,7 +4,6 @@ import { tierSchema } from "./tier"
 
 export const userSchema = z.object({
 	tier: tierSchema,
-	devRating: z.number(),
 	points: z.number(),
 	// array of "YYYY/MM/DD" formatted string (time zone: KST)
 	attendance: z.array(z.string()),

@@ -4,6 +4,7 @@ import type { ChatInputCommandInteraction } from "discord.js"
 import { EmbedBuilder } from "discord.js"
 import type { DocumentSnapshot } from "firebase-admin/firestore"
 
+import { calculateDevRating } from "../lib/devRating"
 import { fetchUserDocument, snowflake2UID } from "../lib/firebase"
 import type { User } from "../types/user"
 
@@ -55,7 +56,7 @@ export class ProfileCommand extends Command {
 			title: `${interaction.user.username}님의 프로필`,
 			// url: "<profile URL>",
 			description: `티어: ${this.formatData(userData.tier)}
-DevRating: ${this.formatData(userData.devRating)}
+DevRating: ${this.formatData(await calculateDevRating(userData))}
 포인트: ${this.formatData(userData.points)}`,
 			fields: [
 				{
