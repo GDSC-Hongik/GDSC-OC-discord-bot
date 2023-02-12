@@ -15,7 +15,7 @@ export default async function (
 	const userDoc = await refs.users.doc(uid).get()
 
 	// return user data if it exists
-	if (userDoc.exists) return cacheUser(uid, userDoc)
+	if (userDoc.exists) return await cacheUser(uid, userDoc)
 
 	// return undefined if the user does not exist in the DB
 	return undefined
