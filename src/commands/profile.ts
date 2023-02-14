@@ -24,7 +24,7 @@ export class ProfileCommand extends Command {
 	}
 
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const uid = await snowflake2UID(interaction.user.id)
+		const uid = snowflake2UID(interaction.user.id)
 		if (!uid) return await this.replyUnregisteredAccount(interaction)
 
 		const user = await getUser(uid)

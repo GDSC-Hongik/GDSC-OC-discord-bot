@@ -7,7 +7,7 @@ export default async function (
 	userSnowflake: string,
 	messageSnowflake: string
 ): Promise<{ success: boolean }> {
-	const uid = await snowflake2UID(userSnowflake)
+	const uid = snowflake2UID(userSnowflake)
 	if (!uid) {
 		printError(userSnowflake, "Unregistered user")
 		return { success: false }

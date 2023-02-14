@@ -7,7 +7,7 @@ export default async function (
 	discordUserID: string,
 	rolesCollection: Collection<string, Role>
 ) {
-	const uid = await snowflake2UID(discordUserID)
+	const uid = snowflake2UID(discordUserID)
 	if (!uid) return logError(discordUserID, "Unregistered user")
 
 	// get all role ids except for "@everyone"
