@@ -24,15 +24,22 @@ export class serverConfigCommand extends Command {
 	}
 
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const infoSharingChannel = botCache.data.channelsConfig.infoSharing
-			? channelMention(botCache.data.channelsConfig.infoSharing)
+		const infoSharingChannels = botCache.data.channels.infoSharing
+			? botCache.data.channels.infoSharing
+					.map((channel) => `- ${channelMention(channel)}\n`)
+					.join()
 			: "없음"
 
 		await interaction.reply({
 			embeds: [
 				new EmbedBuilder({
 					title: "서버 설정",
-					description: `정보 공유 채널: ${infoSharingChannel}`,
+					fields: [
+						{
+							name: "정보 공유 채널",
+							value: infoSharingChannels,
+						},
+					],
 				}),
 			],
 			ephemeral: true,

@@ -2,13 +2,13 @@ import type { DocumentData, DocumentSnapshot } from "firebase-admin/firestore"
 
 import type { User } from "./user"
 
-export interface ChannelConfig {
-	infoSharing?: string
+export interface ChannelsCache {
+	infoSharing: string[]
 }
 
 export default interface BotCache {
 	data: {
-		channelsConfig: ChannelConfig
+		channels: ChannelsCache
 		rolePoints: { [key: string]: number }
 		snowflake2uid: DocumentSnapshot<DocumentData>
 	}

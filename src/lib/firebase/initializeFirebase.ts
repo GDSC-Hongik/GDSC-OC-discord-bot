@@ -4,7 +4,7 @@ import { cert } from "firebase-admin/app"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore } from "firebase-admin/firestore"
 
-import type { ChannelConfig } from "../../types/botCache"
+import type { ChannelsCache } from "../../types/botCache"
 import serviceAccount from "../serviceAccountKey.json"
 import { botCache, db, refs, setAuth, setDB, setRefs } from "."
 import createUser from "./createUser"
@@ -25,7 +25,7 @@ export default async function () {
 
 async function initializeReferences() {
 	setRefs({
-		channelsConfig: db.collection("data").doc("channelsConfig"),
+		channels: db.collection("data").doc("channels"),
 		rolePoints: db.collection("data").doc("rolePoints"),
 		snowflake2uid: db.collection("data").doc("snowflake2uid"),
 		users: db.collection("users"),
@@ -42,10 +42,10 @@ async function initializeDB() {
 	if (rolePointsData) botCache.data.rolePoints = rolePointsData
 	else await refs.rolePoints.create({})
 
-	// init "/data/channelsConfig"
-	const channelData = (await refs.channelsConfig.get()).data()
-	if (channelData) botCache.data.channelsConfig = channelData as ChannelConfig
-	else await refs.channelsConfig.create({})
+	// init "/data/channels"
+	const channelData = (await refs.channels.get()).data()
+	if (channelData) botCache.data.channels = channelData as ChannelsCache
+	else await refs.channels.create(botCache.data.channels)
 
 	// init "/users"
 	// "/users/nobody" exists because collections must have at least one document

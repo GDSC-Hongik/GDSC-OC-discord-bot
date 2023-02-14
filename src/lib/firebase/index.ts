@@ -9,7 +9,7 @@ import type {
 
 import type BotCache from "../../types/botCache"
 import cacheUser from "./cacheUser"
-import { getChannelsConfig, setChannelsConfig } from "./channel"
+import { getChannels, updateChannels } from "./channel"
 import createUser from "./createUser"
 import fetchUserDocument from "./fetchUserDocument"
 import fixUser from "./fixUser"
@@ -23,14 +23,14 @@ export let auth: Auth
 export let db: Firestore
 
 interface FirebaseRefs {
-	channelsConfig: DocumentReference<DocumentData>
+	channels: DocumentReference<DocumentData>
 	rolePoints: DocumentReference<DocumentData>
 	snowflake2uid: DocumentReference<DocumentData>
 	users: CollectionReference<DocumentData>
 }
 
 export let refs: FirebaseRefs = {
-	channelsConfig: {} as DocumentReference<DocumentData>,
+	channels: {} as DocumentReference<DocumentData>,
 	rolePoints: {} as DocumentReference<DocumentData>,
 	snowflake2uid: {} as DocumentReference<DocumentData>,
 	users: {} as CollectionReference<DocumentData>,
@@ -38,7 +38,9 @@ export let refs: FirebaseRefs = {
 
 export const botCache: BotCache = {
 	data: {
-		channelsConfig: {},
+		channels: {
+			infoSharing: [],
+		},
 		rolePoints: {},
 		snowflake2uid: {} as DocumentSnapshot<DocumentData>,
 	},
@@ -62,12 +64,12 @@ export {
 	createUser,
 	fetchUserDocument,
 	fixUser,
-	getChannelsConfig,
+	getChannels,
 	getRolePoint,
 	initializeFirebase,
-	setChannelsConfig,
 	setRolePoint,
 	setUserData,
 	setUserDiscordID,
 	snowflake2UID,
+	updateChannels,
 }
