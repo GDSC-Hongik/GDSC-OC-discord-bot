@@ -1,3 +1,4 @@
+import { Tier, tierSchema } from "../../types/tier"
 import { User } from "../../types/user"
 import { botCache } from "../firebase"
 
@@ -6,10 +7,15 @@ import { botCache } from "../firebase"
  * devRating = (role based points) + (badge points) + (XP points * x)
  *   where x = 1 as of now
  */
-export default async function (user: User): Promise<number> {
+export default async function (
+	user: User
+): Promise<{ points: number; tier: Tier }> {
 	const rolePoints = calculateRolePoints(user)
 
-	return rolePoints + user.points * 1
+	return {
+		points: rolePoints + user.points * 1,
+		tier: tierSchema.enum.UNRANKED,
+	}
 }
 
 function calculateRolePoints(user: User) {

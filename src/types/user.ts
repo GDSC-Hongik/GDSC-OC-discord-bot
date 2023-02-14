@@ -1,11 +1,6 @@
 import { z } from "zod"
 
-import { tierSchema } from "./tier"
-
 export const userSchema = z.object({
-	// user's tier based on their devRating
-	tier: tierSchema,
-
 	// total spendable points. Integer. Can be negative.
 	points: z.number().int(),
 
@@ -19,7 +14,6 @@ export const userSchema = z.object({
 export type User = z.infer<typeof userSchema>
 
 export const defaultUser: User = {
-	tier: tierSchema.enum.UNRANKED,
 	points: 0,
 	attendance: [],
 	roles: [],

@@ -47,11 +47,12 @@ export class ProfileCommand extends Command {
 	}
 
 	async replyProfile(interaction: ChatInputCommandInteraction, user: User) {
+		const devRating = await calculateDevRating(user)
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
 			// url: "<profile URL>",
-			description: `티어: ${this.formatData(user.tier)}
-DevRating: ${this.formatData(await calculateDevRating(user))}
+			description: `티어: ${this.formatData(devRating.tier)}
+DevRating: ${this.formatData(devRating.points)}
 포인트: ${this.formatData(user.points)}`,
 			fields: [
 				{
