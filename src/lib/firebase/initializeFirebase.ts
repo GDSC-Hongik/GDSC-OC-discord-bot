@@ -6,7 +6,7 @@ import { getFirestore } from "firebase-admin/firestore"
 
 import type { ChannelConfig } from "../../types/botCache"
 import serviceAccount from "../serviceAccountKey.json"
-import { botCache, db, refs, setAuth, setDB } from "."
+import { botCache, db, refs, setAuth, setDB, setRefs } from "."
 import createUser from "./createUser"
 
 export default async function () {
@@ -24,10 +24,12 @@ export default async function () {
 }
 
 async function initializeReferences() {
-	refs.channelsConfig = db.collection("data").doc("channelsConfig")
-	refs.rolePoints = db.collection("data").doc("rolePoints")
-	refs.snowflake2uid = db.collection("data").doc("snowflake2uid")
-	refs.users = db.collection("users")
+	setRefs({
+		channelsConfig: db.collection("data").doc("channelsConfig"),
+		rolePoints: db.collection("data").doc("rolePoints"),
+		snowflake2uid: db.collection("data").doc("snowflake2uid"),
+		users: db.collection("users"),
+	})
 }
 
 async function initializeDB() {

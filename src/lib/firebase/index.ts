@@ -29,7 +29,7 @@ interface FirebaseRefs {
 	users: CollectionReference<DocumentData>
 }
 
-export const refs: FirebaseRefs = {
+export let refs: FirebaseRefs = {
 	channelsConfig: {} as DocumentReference<DocumentData>,
 	rolePoints: {} as DocumentReference<DocumentData>,
 	snowflake2uid: {} as DocumentReference<DocumentData>,
@@ -51,6 +51,10 @@ export function setAuth(newAuth: Auth) {
 
 export function setDB(newDB: Firestore) {
 	db = newDB
+}
+
+export function setRefs(newRefs: FirebaseRefs) {
+	refs = newRefs
 }
 
 export {
