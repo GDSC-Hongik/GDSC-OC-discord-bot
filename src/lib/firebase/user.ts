@@ -8,7 +8,8 @@ export enum CreateUserFailReason {
 }
 
 export async function createUser(
-	uid: string
+	uid: string,
+	data?: User
 ): Promise<
 	| { success: true; user: User }
 	| { success: false; reason: CreateUserFailReason }
@@ -36,7 +37,7 @@ export async function createUser(
 	}
 
 	// create, cache, and return user document
-	userDocRef.set(defaultUser, { merge: true })
+	userDocRef.set(data ?? defaultUser, { merge: true })
 	return {
 		success: true,
 		user: (await cacheUser(uid, defaultUser)) || defaultUser,
