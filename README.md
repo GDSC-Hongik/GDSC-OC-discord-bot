@@ -7,9 +7,14 @@
    - Node.JS 최소 버젼: 16.6.0
 
 2. [디스코드 봇을 만드세요](https://discordjs.guide/preparations/setting-up-a-bot-application.html).
-   모든 `Privileged Gateway Intents`또한 활성화시켜주세요.
 
-   ![예시](.github/privileged-gateway-intents.png)
+   - 모든 `Privileged Gateway Intents`또한 활성화시켜주세요.
+
+   ![gateway intents](.github/privileged-gateway-intents.png)
+
+   - `public bot` 기능을 **비**활성화시켜주세요.
+
+   ![gateway intents](.github/public-bot.png)
 
 3. `.env`파일을 만들어주세요
 
