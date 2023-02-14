@@ -1,4 +1,4 @@
 import calculateDevRating from "./calculateDevRating"
-import devRatingEvent from "./devRatingEvent"
+import devRatingEvent, { DevRatingEvent } from "./devRatingEvent"
 
-export { calculateDevRating, devRatingEvent }
+export { calculateDevRating, DevRatingEvent, devRatingEvent }

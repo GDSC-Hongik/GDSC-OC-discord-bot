@@ -2,8 +2,7 @@ import type { Events } from "@sapphire/framework"
 import { Listener } from "@sapphire/framework"
 import type { GuildMember, PartialGuildMember } from "discord.js"
 
-import { devRatingEvent } from "../lib/devRating"
-import DevRatingEvent from "../types/devRatingEvent"
+import { DevRatingEvent, devRatingEvent } from "../lib/devRating"
 
 export class GuildMemberUpdateListener extends Listener<
 	typeof Events.GuildMemberUpdate
