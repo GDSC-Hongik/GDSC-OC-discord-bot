@@ -17,6 +17,7 @@ export class PingCommand extends Command {
 				.setDescription(
 					"봇의 지연 시간을 1000분의 1초 (millisecond, ms) 단위로 측정합니다."
 				)
+				.setDMPermission(false)
 		)
 	}
 

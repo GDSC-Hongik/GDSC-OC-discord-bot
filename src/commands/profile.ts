@@ -16,7 +16,10 @@ export class ProfileCommand extends Command {
 		registry: ChatInputCommand.Registry
 	) {
 		registry.registerChatInputCommand((builder) =>
-			builder.setName("프로필").setDescription("사용자의 프로필을 보여줍니다")
+			builder
+				.setName("프로필")
+				.setDescription("사용자의 프로필을 보여줍니다")
+				.setDMPermission(false)
 		)
 	}
 

@@ -12,7 +12,7 @@ export class SignUpCommand extends Command {
 		registry: ChatInputCommand.Registry
 	) {
 		registry.registerChatInputCommand((builder) =>
-			builder.setName("가입").setDescription("가입")
+			builder.setName("가입").setDescription("가입").setDMPermission(false)
 		)
 	}
 

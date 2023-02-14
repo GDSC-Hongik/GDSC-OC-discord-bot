@@ -26,6 +26,7 @@ export class RegisterCommand extends Command {
 						.setDescription("본인 인증 코드")
 						.setRequired(true)
 				)
+				.setDMPermission(false)
 		)
 	}
 
