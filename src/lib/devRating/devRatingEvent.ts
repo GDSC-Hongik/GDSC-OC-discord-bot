@@ -63,8 +63,18 @@ export default function (payload: DevRatingEventPayload) {
 			break
 		}
 
+		case DevRatingEvent.INFO_POST_DELETE: {
+			infoPostDelete(...payload.data)
+			break
+		}
+
 		case DevRatingEvent.INFO_POST_LIKE_RECEIVE: {
 			infoPostLikeReceive(...payload.data)
+			break
+		}
+
+		case DevRatingEvent.INFO_POST_LIKE_ADD: {
+			infoPostLikeAdd(...payload.data)
 			break
 		}
 
