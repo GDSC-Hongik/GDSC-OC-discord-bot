@@ -1,7 +1,7 @@
 import type { Collection, Role } from "discord.js"
 import { userMention } from "discord.js"
 
-import { fetchUserDocument, setUserData, snowflake2UID } from "../firebase"
+import { getUser, setUser, snowflake2UID } from "../firebase"
 
 export default async function (
 	discordUserID: string,
@@ -18,15 +18,11 @@ export default async function (
 		roles.push(role.id)
 	})
 
-	const userDoc = await fetchUserDocument(uid)
-	if (!userDoc) return logError(discordUserID, "Failed to fetch user document")
+	const user = await getUser(uid)
+	if (!user) return logError(discordUserID, "Failed to get user data")
 
-	const userData = userDoc.data()
-	if (!userData) return logError(discordUserID, "Failed to fetch user data")
-
-	userData.roles = roles
-
-	setUserData(uid, userData)
+	user.roles = roles
+	setUser(uid, user)
 }
 
 function logError(discordUserID: string, reason: string): void {

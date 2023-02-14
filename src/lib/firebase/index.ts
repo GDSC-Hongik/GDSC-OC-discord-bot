@@ -3,21 +3,22 @@ import type {
 	CollectionReference,
 	DocumentData,
 	DocumentReference,
-	DocumentSnapshot,
 	Firestore,
 } from "firebase-admin/firestore"
 
 import type BotCache from "../../types/botCache"
-import cacheUser from "./cacheUser"
 import { getChannels, updateChannels } from "./channel"
-import createUser from "./createUser"
-import fetchUserDocument from "./fetchUserDocument"
-import fixUser from "./fixUser"
 import initializeFirebase from "./initializeFirebase"
 import { getRolePoint, setRolePoint } from "./rolePoints"
-import setUserData from "./setUserData"
 import setUserDiscordID from "./setUserDiscordID"
 import snowflake2UID from "./snowflake2UID"
+import {
+	createUser,
+	CreateUserFailReason,
+	fixUser,
+	getUser,
+	setUser,
+} from "./user"
 
 export let auth: Auth
 export let db: Firestore
@@ -42,7 +43,7 @@ export const botCache: BotCache = {
 			infoSharing: [],
 		},
 		rolePoints: {},
-		snowflake2uid: {} as DocumentSnapshot<DocumentData>,
+		snowflake2uid: {},
 	},
 	users: {},
 }
@@ -60,15 +61,15 @@ export function setRefs(newRefs: FirebaseRefs) {
 }
 
 export {
-	cacheUser,
 	createUser,
-	fetchUserDocument,
+	CreateUserFailReason,
 	fixUser,
 	getChannels,
 	getRolePoint,
+	getUser,
 	initializeFirebase,
 	setRolePoint,
-	setUserData,
+	setUser,
 	setUserDiscordID,
 	snowflake2UID,
 	updateChannels,

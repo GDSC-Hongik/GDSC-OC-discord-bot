@@ -6,8 +6,7 @@ import { getFirestore } from "firebase-admin/firestore"
 
 import type { ChannelsCache } from "../../types/botCache"
 import serviceAccount from "../serviceAccountKey.json"
-import { botCache, db, refs, setAuth, setDB, setRefs } from "."
-import createUser from "./createUser"
+import { botCache, createUser, db, refs, setAuth, setDB, setRefs } from "."
 
 export default async function () {
 	console.log("Initializing Firebase")
@@ -34,13 +33,14 @@ async function initializeReferences() {
 
 async function initializeDB() {
 	// init "/data/snowflake2uid"
-	botCache.data.snowflake2uid = await refs.snowflake2uid.get()
-	if (!botCache.data.snowflake2uid.exists) await refs.snowflake2uid.create({})
+	const snowflake2uidData = (await refs.snowflake2uid.get()).data()
+	if (snowflake2uidData) botCache.data.snowflake2uid = snowflake2uidData
+	else await refs.snowflake2uid.create(botCache.data.snowflake2uid)
 
 	// init "/data/rolePoints"
 	const rolePointsData = (await refs.rolePoints.get()).data()
 	if (rolePointsData) botCache.data.rolePoints = rolePointsData
-	else await refs.rolePoints.create({})
+	else await refs.rolePoints.create(botCache.data.rolePoints)
 
 	// init "/data/channels"
 	const channelData = (await refs.channels.get()).data()

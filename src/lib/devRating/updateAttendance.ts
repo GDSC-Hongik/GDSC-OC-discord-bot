@@ -1,6 +1,6 @@
 import moment from "moment-timezone"
 
-import { fetchUserDocument, setUserData, snowflake2UID } from "../firebase"
+import { getUser, setUser, snowflake2UID } from "../firebase"
 import snowflake2Time from "../snowflake2Time"
 
 export default async function (
@@ -13,29 +13,23 @@ export default async function (
 		return { success: false }
 	}
 
-	const userDoc = await fetchUserDocument(uid)
-	if (!userDoc) {
-		printError(userSnowflake, "Failed to fetch user document")
+	const user = await getUser(uid)
+	if (!user) {
+		printError(userSnowflake, "Failed to get user data")
 		return { success: false }
 	}
 
 	const messageCreateTime = snowflake2Time(messageSnowflake)
 	const YYYYMMDD = formatDate(messageCreateTime)
 
-	const userData = userDoc.data()
-	if (!userData) {
-		printError(userSnowflake, "Failed to fetch user data")
-		return { success: false }
-	}
-
-	const latestYYYYMMDD = userData.attendance.at(-1)
+	const latestYYYYMMDD = user.attendance.at(-1)
 
 	// attendance is already marked
 	if (latestYYYYMMDD === YYYYMMDD) return { success: true }
 
 	// update user attendance
-	setUserData(uid, userData)
-	userData.attendance.push(YYYYMMDD)
+	user.attendance.push(YYYYMMDD)
+	setUser(uid, user)
 
 	return { success: true }
 }

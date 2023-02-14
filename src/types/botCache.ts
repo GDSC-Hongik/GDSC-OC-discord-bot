@@ -1,5 +1,3 @@
-import type { DocumentData, DocumentSnapshot } from "firebase-admin/firestore"
-
 import type { User } from "./user"
 
 export interface ChannelsCache {
@@ -10,8 +8,7 @@ export default interface BotCache {
 	data: {
 		channels: ChannelsCache
 		rolePoints: { [key: string]: number }
-		snowflake2uid: DocumentSnapshot<DocumentData>
+		snowflake2uid: { [key: string]: string }
 	}
-
-	users: { [key: string]: DocumentSnapshot<User> }
+	users: { [key: string]: User }
 }

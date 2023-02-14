@@ -2,10 +2,9 @@ import type { ChatInputCommand } from "@sapphire/framework"
 import { Command } from "@sapphire/framework"
 import type { ChatInputCommandInteraction } from "discord.js"
 import { EmbedBuilder } from "discord.js"
-import type { DocumentSnapshot } from "firebase-admin/firestore"
 
 import { calculateDevRating } from "../lib/devRating"
-import { fetchUserDocument, snowflake2UID } from "../lib/firebase"
+import { getUser, snowflake2UID } from "../lib/firebase"
 import type { User } from "../types/user"
 
 export class ProfileCommand extends Command {
@@ -25,11 +24,10 @@ export class ProfileCommand extends Command {
 		const uid = await snowflake2UID(interaction.user.id)
 		if (!uid) return await this.replyUnregisteredAccount(interaction)
 
-		const userDoc = await fetchUserDocument(uid)
-		if (!userDoc || !userDoc.exists)
-			return await this.replyUnregisteredAccount(interaction)
+		const user = await getUser(uid)
+		if (!user) return await this.replyUnregisteredAccount(interaction)
 
-		return await this.replyProfile(interaction, userDoc)
+		return await this.replyProfile(interaction, user)
 	}
 
 	async replyUnregisteredAccount(interaction: ChatInputCommandInteraction) {
@@ -45,23 +43,17 @@ export class ProfileCommand extends Command {
 		})
 	}
 
-	async replyProfile(
-		interaction: ChatInputCommandInteraction,
-		userDoc: DocumentSnapshot<User>
-	) {
-		const userData = userDoc.data()
-		if (!userData) return await this.replyUnregisteredAccount(interaction)
-
+	async replyProfile(interaction: ChatInputCommandInteraction, user: User) {
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
 			// url: "<profile URL>",
-			description: `티어: ${this.formatData(userData.tier)}
-DevRating: ${this.formatData(await calculateDevRating(userData))}
-포인트: ${this.formatData(userData.points)}`,
+			description: `티어: ${this.formatData(user.tier)}
+DevRating: ${this.formatData(await calculateDevRating(user))}
+포인트: ${this.formatData(user.points)}`,
 			fields: [
 				{
 					name: "활동",
-					value: `출석: 총 ${this.formatData(userData.attendance.length)}일
+					value: `출석: 총 ${this.formatData(user.attendance.length)}일
 포스팅: ${this.formatData(null)}개 + 좋아요 ${this.formatData(null)}개`,
 				},
 			],
