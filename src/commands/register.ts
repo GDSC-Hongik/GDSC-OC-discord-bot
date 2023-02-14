@@ -56,7 +56,7 @@ export class RegisterCommand extends Command {
 			roles = interaction.member.roles
 		} else {
 			interaction.member.roles.cache.map((role) => {
-				roles.push(role.id)
+				if (role.name !== "@everyone") roles.push(role.id)
 			})
 		}
 		const createUserResult = await createUser(uid, {
