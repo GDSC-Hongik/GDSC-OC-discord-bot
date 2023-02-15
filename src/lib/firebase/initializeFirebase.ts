@@ -33,6 +33,7 @@ export default async function () {
 
 async function initializeReferences() {
 	setRefs({
+		achievementPoints: db.collection("data").doc("achievementPoints"),
 		channels: db.collection("data").doc("channels"),
 		rolePoints: db.collection("data").doc("rolePoints"),
 		snowflake2uid: db.collection("data").doc("snowflake2uid"),
@@ -42,6 +43,13 @@ async function initializeReferences() {
 }
 
 async function initializeDB() {
+	// init "/data/achievementPoints"
+	const achievementPoints = (await refs.achievementPoints.get()).data()
+	if (achievementPoints)
+		botCache.data.achievementPoints =
+			achievementPoints as typeof botCache.data.achievementPoints
+	else await refs.achievementPoints.create(botCache.data.achievementPoints)
+
 	// init "/data/channels"
 	const channelData = (await refs.channels.get()).data()
 	if (channelData) botCache.data.channels = channelData as ChannelsCache

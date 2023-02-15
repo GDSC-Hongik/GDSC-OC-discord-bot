@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+import { achievementsSchema } from "./Achievements"
+
 export const userSchema = z.object({
 	// total spendable points. Integer. Can be negative.
 	points: z.number().int(),
@@ -12,6 +14,8 @@ export const userSchema = z.object({
 
 	// array of post IDs
 	posts: z.array(z.string().regex(/[a-zA-Z0-9]+/)),
+
+	achievements: z.array(achievementsSchema),
 })
 
 export type User = z.infer<typeof userSchema>
@@ -21,4 +25,5 @@ export const defaultUser: User = {
 	attendance: [],
 	roles: [],
 	posts: [],
+	achievements: [],
 }
