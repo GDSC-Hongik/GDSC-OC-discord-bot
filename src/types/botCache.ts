@@ -1,3 +1,4 @@
+import { Post } from "./post"
 import type { User } from "./user"
 
 export interface ChannelsCache {
@@ -10,5 +11,6 @@ export default interface BotCache {
 		rolePoints: { [key: string]: number }
 		snowflake2uid: { [key: string]: string }
 	}
+	posts: { [key: string]: Post }
 	users: { [key: string]: User }
 }

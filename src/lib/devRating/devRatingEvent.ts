@@ -1,7 +1,7 @@
-import infoPostCreate from "./infoPostCreate"
-import infoPostDelete from "./infoPostDelete"
 import infoPostLikeAdd from "./infoPostLikeAdd"
 import infoPostLikeReceive from "./infoPostLikeReceive"
+import infoPostCreate from "./postCreate"
+import infoPostDelete from "./postDelete"
 import updateAttendance from "./updateAttendance"
 import updateRole from "./updateRole"
 
@@ -10,16 +10,16 @@ export enum DevRatingEvent {
 	UPDATE_ATTENDANCE,
 
 	// 정보공유 포스트 생성
-	INFO_POST_CREATE,
+	POST_CREATE,
 
 	// 정보공유 포스트 삭제
-	INFO_POST_DELETE,
+	POST_DELETE,
 
 	// 본인의 정보공유 포스트에 좋아요가 추가됨
-	INFO_POST_LIKE_RECEIVE,
+	POST_LIKE_RECEIVE,
 
 	// 타인의 정보공유 포스트에 좋아요를 추가함
-	INFO_POST_LIKE_ADD,
+	POST_LIKE_ADD,
 
 	// 역할 정보 갱신
 	UPDATE_ROLE,
@@ -31,19 +31,19 @@ type DevRatingEventPayload =
 			data: Parameters<typeof updateAttendance>
 	  }
 	| {
-			type: DevRatingEvent.INFO_POST_CREATE
+			type: DevRatingEvent.POST_CREATE
 			data: Parameters<typeof infoPostCreate>
 	  }
 	| {
-			type: DevRatingEvent.INFO_POST_DELETE
+			type: DevRatingEvent.POST_DELETE
 			data: Parameters<typeof infoPostDelete>
 	  }
 	| {
-			type: DevRatingEvent.INFO_POST_LIKE_RECEIVE
+			type: DevRatingEvent.POST_LIKE_RECEIVE
 			data: Parameters<typeof infoPostLikeReceive>
 	  }
 	| {
-			type: DevRatingEvent.INFO_POST_LIKE_ADD
+			type: DevRatingEvent.POST_LIKE_ADD
 			data: Parameters<typeof infoPostLikeAdd>
 	  }
 	| {
@@ -58,22 +58,22 @@ export default async function (payload: DevRatingEventPayload) {
 			break
 		}
 
-		case DevRatingEvent.INFO_POST_CREATE: {
+		case DevRatingEvent.POST_CREATE: {
 			await infoPostCreate(...payload.data)
 			break
 		}
 
-		case DevRatingEvent.INFO_POST_DELETE: {
+		case DevRatingEvent.POST_DELETE: {
 			await infoPostDelete(...payload.data)
 			break
 		}
 
-		case DevRatingEvent.INFO_POST_LIKE_RECEIVE: {
+		case DevRatingEvent.POST_LIKE_RECEIVE: {
 			await infoPostLikeReceive(...payload.data)
 			break
 		}
 
-		case DevRatingEvent.INFO_POST_LIKE_ADD: {
+		case DevRatingEvent.POST_LIKE_ADD: {
 			await infoPostLikeAdd(...payload.data)
 			break
 		}

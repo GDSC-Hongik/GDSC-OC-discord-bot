@@ -6,7 +6,16 @@ import { getFirestore } from "firebase-admin/firestore"
 
 import type { ChannelsCache } from "../../types/botCache"
 import serviceAccount from "../serviceAccountKey.json"
-import { botCache, createUser, db, refs, setAuth, setDB, setRefs } from "."
+import {
+	botCache,
+	createPost,
+	createUser,
+	db,
+	refs,
+	setAuth,
+	setDB,
+	setRefs,
+} from "."
 
 export default async function () {
 	console.log("Initializing Firebase")
@@ -27,6 +36,7 @@ async function initializeReferences() {
 		channels: db.collection("data").doc("channels"),
 		rolePoints: db.collection("data").doc("rolePoints"),
 		snowflake2uid: db.collection("data").doc("snowflake2uid"),
+		posts: db.collection("posts"),
 		users: db.collection("users"),
 	})
 }
@@ -47,7 +57,12 @@ async function initializeDB() {
 	if (channelData) botCache.data.channels = channelData as ChannelsCache
 	else await refs.channels.create(botCache.data.channels)
 
+	// the following data exist because firestore collections must have at least
+	// one document to exist
+
+	// init "/posts"
+	createPost({ author: "nobody", discord: false, likes: 0 }, "EmptyPost")
+
 	// init "/users"
-	// "/users/nobody" exists because collections must have at least one document
 	createUser("nobody")
 }

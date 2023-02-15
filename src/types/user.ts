@@ -9,6 +9,9 @@ export const userSchema = z.object({
 
 	// array of discord role IDs
 	roles: z.array(z.string().regex(/\d+/)),
+
+	// array of post IDs
+	posts: z.array(z.string().regex(/[a-zA-Z0-9]+/)),
 })
 
 export type User = z.infer<typeof userSchema>
@@ -17,4 +20,5 @@ export const defaultUser: User = {
 	points: 0,
 	attendance: [],
 	roles: [],
+	posts: [],
 }
