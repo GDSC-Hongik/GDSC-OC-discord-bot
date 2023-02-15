@@ -58,7 +58,7 @@ DevRating: ${this.formatData(devRating.points)}
 				{
 					name: "활동",
 					value: `출석: 총 ${this.formatData(user.attendance.length)}일
-포스팅: ${this.formatData(null)}개 + 좋아요 ${this.formatData(null)}개`,
+포스팅: ${this.formatData(user.posts.length)}개`,
 				},
 			],
 		})
