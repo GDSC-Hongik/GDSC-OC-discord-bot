@@ -26,15 +26,7 @@ import { createUser, CreateUserFailReason, getUser, setUser } from "./user"
 export let auth: Auth
 export let db: Firestore
 
-interface FirebaseRefs {
-	channels: DocumentReference<DocumentData>
-	rolePoints: DocumentReference<DocumentData>
-	snowflake2uid: DocumentReference<DocumentData>
-	posts: CollectionReference<DocumentData>
-	users: CollectionReference<DocumentData>
-}
-
-export let refs: FirebaseRefs = {
+export let refs = {
 	channels: {} as DocumentReference<DocumentData>,
 	rolePoints: {} as DocumentReference<DocumentData>,
 	snowflake2uid: {} as DocumentReference<DocumentData>,
@@ -62,7 +54,7 @@ export function setDB(newDB: Firestore) {
 	db = newDB
 }
 
-export function setRefs(newRefs: FirebaseRefs) {
+export function setRefs(newRefs: typeof refs) {
 	refs = newRefs
 }
 
