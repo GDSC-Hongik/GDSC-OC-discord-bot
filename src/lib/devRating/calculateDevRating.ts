@@ -11,9 +11,10 @@ export default async function (
 	user: User
 ): Promise<{ points: number; tier: Tier }> {
 	const rolePoints = calculateRolePoints(user)
+	const achievementPoints = calculateAchievementPoints(user)
 
 	return {
-		points: rolePoints + user.points * 1,
+		points: rolePoints + achievementPoints + user.points * 1,
 		tier: tierSchema.enum.UNRANKED,
 	}
 }
@@ -27,4 +28,15 @@ function calculateRolePoints(user: User): number {
 	})
 
 	return rolePoints
+}
+
+function calculateAchievementPoints(user: User): number {
+	let achievementPoints = 0
+
+	user.achievements.map((achievement) => {
+		if (typeof botCache.data.achievementPoints[achievement] === "number")
+			achievementPoints += botCache.data.achievementPoints[achievement]
+	})
+
+	return achievementPoints
 }
