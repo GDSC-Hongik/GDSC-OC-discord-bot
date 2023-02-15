@@ -1,6 +1,6 @@
 import moment from "moment-timezone"
 
-import { Achievements } from "../../types/Achievements"
+import { Achievements } from "../../types/achievements"
 import { getUser, setUser, snowflake2UID } from "../firebase"
 import snowflake2Time from "../snowflake2Time"
 

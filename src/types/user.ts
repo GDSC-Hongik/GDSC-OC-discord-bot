@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { achievementsSchema } from "./Achievements"
+import { achievementsSchema } from "./achievements"
 
 export const userSchema = z.object({
 	// total spendable points. Integer. Can be negative.

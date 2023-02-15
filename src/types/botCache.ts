@@ -1,4 +1,4 @@
-import type { Achievements } from "./Achievements"
+import type { Achievements } from "./achievements"
 import type { Post } from "./post"
 import type { User } from "./user"
 

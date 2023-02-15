@@ -6,7 +6,7 @@ import type {
 	Firestore,
 } from "firebase-admin/firestore"
 
-import { Achievements } from "../../types/Achievements"
+import { Achievements } from "../../types/achievements"
 import type BotCache from "../../types/botCache"
 import { getChannels, updateChannels } from "./channel"
 import fixSchema from "./fixSchema"
