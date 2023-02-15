@@ -1,5 +1,5 @@
-import { Achievements } from "./Achievements"
-import { Post } from "./post"
+import type { Achievements } from "./Achievements"
+import type { Post } from "./post"
 import type { User } from "./user"
 
 export interface ChannelsCache {
