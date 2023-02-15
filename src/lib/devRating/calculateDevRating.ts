@@ -13,9 +13,12 @@ export default async function (
 	const rolePoints = calculateRolePoints(user)
 	const achievementPoints = calculateAchievementPoints(user)
 
+	const points = rolePoints + achievementPoints + user.points * 1
+	const tier = calculateTier(points)
+
 	return {
-		points: rolePoints + achievementPoints + user.points * 1,
-		tier: tierSchema.enum.UNRANKED,
+		points,
+		tier,
 	}
 }
 
@@ -39,4 +42,14 @@ function calculateAchievementPoints(user: User): number {
 	})
 
 	return achievementPoints
+}
+
+function calculateTier(points: number): Tier {
+	if (points > 2000) return tierSchema.enum.V
+	if (points > 1000) return tierSchema.enum.IV
+	if (points > 500) return tierSchema.enum.III
+	if (points > 250) return tierSchema.enum.II
+	if (points > 20) return tierSchema.enum.I
+
+	return tierSchema.enum.UNRANKED
 }
