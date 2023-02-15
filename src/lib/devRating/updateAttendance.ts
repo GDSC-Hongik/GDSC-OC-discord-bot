@@ -1,5 +1,6 @@
 import moment from "moment-timezone"
 
+import { Achievements } from "../../types/Achievements"
 import { getUser, setUser, snowflake2UID } from "../firebase"
 import snowflake2Time from "../snowflake2Time"
 
@@ -29,6 +30,20 @@ export default async function (
 
 	// update user attendance
 	user.attendance.push(YYYYMMDD)
+
+	// update achievements
+	const achievementSet = new Set(user.achievements)
+	const totalDaysAttended = user.attendance.length
+	if (totalDaysAttended >= 1) achievementSet.add(Achievements.ATTENDANCE_1)
+	if (totalDaysAttended >= 10) achievementSet.add(Achievements.ATTENDANCE_10)
+	if (totalDaysAttended >= 30) achievementSet.add(Achievements.ATTENDANCE_30)
+	if (totalDaysAttended >= 50) achievementSet.add(Achievements.ATTENDANCE_50)
+	if (totalDaysAttended >= 100) achievementSet.add(Achievements.ATTENDANCE_100)
+	if (totalDaysAttended >= 300) achievementSet.add(Achievements.ATTENDANCE_300)
+
+	user.achievements = Array.from(achievementSet)
+
+	// write to DB
 	setUser(uid, user)
 
 	return { success: true }
