@@ -12,7 +12,7 @@ export default async function (thread: ThreadChannel): Promise<void> {
 		// remove post from user
 		const user = await getUser(postData.author)
 		if (user) {
-			user.posts = user.posts.filter((userPostID) => userPostID === postID)
+			user.posts = user.posts.filter((userPostID) => userPostID !== postID)
 			setUser(postData.author, user)
 		}
 
