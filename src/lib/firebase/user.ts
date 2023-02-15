@@ -95,5 +95,5 @@ export async function setUser(uid: string, data: User): Promise<void> {
 		)
 
 	userDoc.ref.set(data, { merge: true })
-	cacheUser(uid, userDoc.data() as User)
+	cacheUser(uid, data)
 }
