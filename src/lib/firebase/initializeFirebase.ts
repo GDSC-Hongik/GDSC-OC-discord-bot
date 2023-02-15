@@ -42,20 +42,20 @@ async function initializeReferences() {
 }
 
 async function initializeDB() {
-	// init "/data/snowflake2uid"
-	const snowflake2uidData = (await refs.snowflake2uid.get()).data()
-	if (snowflake2uidData) botCache.data.snowflake2uid = snowflake2uidData
-	else await refs.snowflake2uid.create(botCache.data.snowflake2uid)
+	// init "/data/channels"
+	const channelData = (await refs.channels.get()).data()
+	if (channelData) botCache.data.channels = channelData as ChannelsCache
+	else await refs.channels.create(botCache.data.channels)
 
 	// init "/data/rolePoints"
 	const rolePointsData = (await refs.rolePoints.get()).data()
 	if (rolePointsData) botCache.data.rolePoints = rolePointsData
 	else await refs.rolePoints.create(botCache.data.rolePoints)
 
-	// init "/data/channels"
-	const channelData = (await refs.channels.get()).data()
-	if (channelData) botCache.data.channels = channelData as ChannelsCache
-	else await refs.channels.create(botCache.data.channels)
+	// init "/data/snowflake2uid"
+	const snowflake2uidData = (await refs.snowflake2uid.get()).data()
+	if (snowflake2uidData) botCache.data.snowflake2uid = snowflake2uidData
+	else await refs.snowflake2uid.create(botCache.data.snowflake2uid)
 
 	// the following data exist because firestore collections must have at least
 	// one document to exist
