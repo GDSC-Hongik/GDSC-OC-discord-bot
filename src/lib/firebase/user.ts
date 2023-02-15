@@ -1,6 +1,6 @@
 import type { User } from "../../types/user"
 import { defaultUser, userSchema } from "../../types/user"
-import { auth, botCache, refs } from "."
+import { auth, botCache, fixSchema, refs } from "."
 
 export enum CreateUserFailReason {
 	USER_NOT_IN_AUTH,
@@ -44,32 +44,6 @@ export async function createUser(
 	}
 }
 
-/**
- * Fix user database to fit schema. Can not remove or rename fields yet.
- */
-export async function fixUser(uid: string): Promise<{ success: boolean }> {
-	const userDocRef = refs.users.doc(uid)
-	const userDoc = await userDocRef.get()
-	if (!userDoc) {
-		console.error(`Failed to fix user "${uid}". Failed to fetch user document.`)
-		return { success: false }
-	}
-
-	const userData = userDoc.data()
-	if (!userData) {
-		console.error(`Failed to fix user "${uid}". Failed to fetch user data.`)
-		return { success: false }
-	}
-
-	// create required fields
-	await userDocRef.set(defaultUser, { merge: true })
-
-	// restore data
-	await userDocRef.set(userData, { merge: true })
-
-	return { success: true }
-}
-
 async function cacheUser(uid: string, user: User): Promise<User | undefined> {
 	const parseResult = userSchema.safeParse(user)
 
@@ -83,7 +57,7 @@ async function cacheUser(uid: string, user: User): Promise<User | undefined> {
 		)}`
 	)
 
-	const fixResult = await fixUser(uid)
+	const fixResult = await fixSchema(refs.users.doc(uid), defaultUser)
 	if (fixResult.success) {
 		const fixedUser = (await refs.users.doc(uid).get()).data()
 		return (botCache.users[uid] = fixedUser as User)
