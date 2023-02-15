@@ -18,11 +18,12 @@ export default async function (
 	}
 }
 
-function calculateRolePoints(user: User) {
+function calculateRolePoints(user: User): number {
 	let rolePoints = 0
 
 	user.roles.map((role) => {
-		rolePoints += botCache.data.rolePoints[role]
+		if (typeof botCache.data.rolePoints[role] === "number")
+			rolePoints += botCache.data.rolePoints[role]
 	})
 
 	return rolePoints
