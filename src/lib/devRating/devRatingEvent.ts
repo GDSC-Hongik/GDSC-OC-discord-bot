@@ -51,35 +51,35 @@ type DevRatingEventPayload =
 			data: Parameters<typeof updateRole>
 	  }
 
-export default function (payload: DevRatingEventPayload) {
+export default async function (payload: DevRatingEventPayload) {
 	switch (payload.type) {
 		case DevRatingEvent.UPDATE_ATTENDANCE: {
-			updateAttendance(...payload.data)
+			await updateAttendance(...payload.data)
 			break
 		}
 
 		case DevRatingEvent.INFO_POST_CREATE: {
-			infoPostCreate(...payload.data)
+			await infoPostCreate(...payload.data)
 			break
 		}
 
 		case DevRatingEvent.INFO_POST_DELETE: {
-			infoPostDelete(...payload.data)
+			await infoPostDelete(...payload.data)
 			break
 		}
 
 		case DevRatingEvent.INFO_POST_LIKE_RECEIVE: {
-			infoPostLikeReceive(...payload.data)
+			await infoPostLikeReceive(...payload.data)
 			break
 		}
 
 		case DevRatingEvent.INFO_POST_LIKE_ADD: {
-			infoPostLikeAdd(...payload.data)
+			await infoPostLikeAdd(...payload.data)
 			break
 		}
 
 		case DevRatingEvent.UPDATE_ROLE: {
-			updateRole(...payload.data)
+			await updateRole(...payload.data)
 			break
 		}
 

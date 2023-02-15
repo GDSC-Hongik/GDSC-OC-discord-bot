@@ -8,7 +8,7 @@ export class MessageCreateListener extends Listener<
 > {
 	public async run(message: Message) {
 		if (!message.author.bot)
-			devRatingEvent({
+			await devRatingEvent({
 				type: DevRatingEvent.UPDATE_ATTENDANCE,
 				data: [message.author.id, message.id],
 			})

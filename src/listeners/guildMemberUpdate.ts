@@ -30,7 +30,7 @@ export class GuildMemberUpdateListener extends Listener<
 			this.container.logger.info(`role "${role.id}" added to "${oldMember.id}"`)
 		})
 
-		devRatingEvent({
+		await devRatingEvent({
 			type: DevRatingEvent.UPDATE_ROLE,
 			data: [newMember.id, newRolesCache],
 		})
@@ -53,7 +53,7 @@ export class GuildMemberUpdateListener extends Listener<
 			)
 		})
 
-		devRatingEvent({
+		await devRatingEvent({
 			type: DevRatingEvent.UPDATE_ROLE,
 			data: [newMember.id, newRolesCache],
 		})
