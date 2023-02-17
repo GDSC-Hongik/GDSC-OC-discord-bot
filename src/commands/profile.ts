@@ -57,7 +57,9 @@ DevRating: ${this.formatData(devRating.points)}
 			fields: [
 				{
 					name: "활동",
-					value: `출석: 총 ${this.formatData(user.attendance.length)}일
+					value: `출석: 총 ${this.formatData(
+						user.attendance.length
+					)}일 (마지막 출석: ${user.attendance.at(-1)})
 포스팅: ${this.formatData(user.posts.length)}개`,
 				},
 			],
