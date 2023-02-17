@@ -1,6 +1,13 @@
 import type { Message } from "discord.js"
 
-import { createPost, getUser, setUser, snowflake2UID } from "../firebase"
+import { Activities } from "../../types/activities"
+import {
+	botCache,
+	createPost,
+	getUser,
+	setUser,
+	snowflake2UID,
+} from "../firebase"
 
 export default async function (message: Message): Promise<void> {
 	const uid = snowflake2UID(message.author.id)
@@ -18,7 +25,9 @@ export default async function (message: Message): Promise<void> {
 
 	if (createPostResult.success) {
 		user.posts.push(createPostResult.postID)
+		user.points += botCache.data.activityPoints[Activities.POST_CREATE]
 		await setUser(uid, user)
+
 		return
 	}
 
