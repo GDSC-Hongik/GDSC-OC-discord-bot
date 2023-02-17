@@ -7,6 +7,7 @@ import type {
 } from "firebase-admin/firestore"
 
 import { Achievements } from "../../types/achievements"
+import { Activities } from "../../types/activities"
 import type BotCache from "../../types/botCache"
 import { getChannels, updateChannels } from "./channel"
 import fixSchema from "./fixSchema"
@@ -29,6 +30,7 @@ export let db: Firestore
 
 export let refs = {
 	achievementPoints: {} as DocumentReference<DocumentData>,
+	activityPoints: {} as DocumentReference<DocumentData>,
 	channels: {} as DocumentReference<DocumentData>,
 	rolePoints: {} as DocumentReference<DocumentData>,
 	snowflake2uid: {} as DocumentReference<DocumentData>,
@@ -45,6 +47,17 @@ export const botCache: BotCache = {
 			[Achievements.ATTENDANCE_50]: 50,
 			[Achievements.ATTENDANCE_100]: 100,
 			[Achievements.ATTENDANCE_300]: 300,
+		},
+		activityPoints: {
+			[Activities.ATTENDANCE]: 1,
+
+			[Activities.POST_CREATE]: 5,
+			[Activities.POST_LIKE_RECEIVE]: 1,
+			[Activities.POST_LIKE_ADD]: 1,
+
+			[Activities.ATTEND_STUDY]: 10,
+			[Activities.ATTEND_SEMINAR]: 10,
+			[Activities.SEMINAR_SPEAKER]: 15,
 		},
 		channels: {
 			infoSharing: [],

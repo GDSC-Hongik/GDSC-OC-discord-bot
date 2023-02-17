@@ -38,6 +38,7 @@ export default async function () {
 async function initializeReferences() {
 	setRefs({
 		achievementPoints: db.collection("data").doc("achievementPoints"),
+		activityPoints: db.collection("data").doc("activityPoints"),
 		channels: db.collection("data").doc("channels"),
 		rolePoints: db.collection("data").doc("rolePoints"),
 		snowflake2uid: db.collection("data").doc("snowflake2uid"),
@@ -49,6 +50,9 @@ async function initializeReferences() {
 async function initializeDB() {
 	// init "/data/achievementPoints"
 	await initDoc(refs.achievementPoints, botCache.data.achievementPoints)
+
+	// init "/data/activityPoints"
+	await initDoc(refs.activityPoints, botCache.data.activityPoints)
 
 	// init "/data/channels"
 	await initDoc(refs.channels, botCache.data.channels)

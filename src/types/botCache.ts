@@ -1,4 +1,5 @@
 import type { Achievements } from "./achievements"
+import type { Activities } from "./activities"
 import type { Post } from "./post"
 import type { User } from "./user"
 
@@ -9,6 +10,7 @@ export interface ChannelsCache {
 export default interface BotCache {
 	data: {
 		achievementPoints: { [key in Achievements]: number }
+		activityPoints: { [key in Activities]: number }
 		channels: ChannelsCache
 		rolePoints: { [key: string]: number }
 		snowflake2uid: { [key: string]: string }
