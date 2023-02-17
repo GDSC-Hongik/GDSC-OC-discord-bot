@@ -1,6 +1,7 @@
 import moment from "moment-timezone"
 
 import { Achievements } from "../../types/achievements"
+import type { User } from "../../types/user"
 import { getUser, setUser, snowflake2UID } from "../firebase"
 import snowflake2Time from "../snowflake2Time"
 
@@ -20,14 +21,18 @@ export default async function (
 		return { success: false }
 	}
 
-	const messageCreateTime = snowflake2Time(messageSnowflake)
-	const YYYYMMDD = formatDate(messageCreateTime)
+	const YYYYMMDD = formatDate(snowflake2Time(messageSnowflake))
 
+	// check if attendance is already marked
 	const latestYYYYMMDD = user.attendance.at(-1)
-
-	// attendance is already marked
 	if (latestYYYYMMDD === YYYYMMDD) return { success: true }
 
+	await updateUserData(uid, user, YYYYMMDD)
+
+	return { success: true }
+}
+
+async function updateUserData(uid: string, user: User, YYYYMMDD: string) {
 	// update user attendance
 	user.attendance.push(YYYYMMDD)
 
@@ -40,13 +45,13 @@ export default async function (
 	if (totalDaysAttended >= 50) achievementSet.add(Achievements.ATTENDANCE_50)
 	if (totalDaysAttended >= 100) achievementSet.add(Achievements.ATTENDANCE_100)
 	if (totalDaysAttended >= 300) achievementSet.add(Achievements.ATTENDANCE_300)
-
 	user.achievements = Array.from(achievementSet)
 
-	// write to DB
-	setUser(uid, user)
+	// update XP points
+	// user.points += botCache.data.points
 
-	return { success: true }
+	// write to DB
+	await setUser(uid, user)
 }
 
 /**
