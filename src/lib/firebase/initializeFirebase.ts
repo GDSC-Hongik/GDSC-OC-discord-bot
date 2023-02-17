@@ -2,11 +2,6 @@ import * as admin from "firebase-admin"
 import type { ServiceAccount } from "firebase-admin/app"
 import { cert } from "firebase-admin/app"
 import { getAuth } from "firebase-admin/auth"
-import type {
-	DocumentData,
-	DocumentReference,
-	WithFieldValue,
-} from "firebase-admin/firestore"
 import { getFirestore } from "firebase-admin/firestore"
 
 import serviceAccount from "../serviceAccountKey.json"
@@ -48,20 +43,11 @@ async function initializeReferences() {
 }
 
 async function initializeDB() {
-	// init "/data/achievementPoints"
-	await initDoc(refs.achievementPoints, botCache.data.achievementPoints)
-
-	// init "/data/activityPoints"
-	await initDoc(refs.activityPoints, botCache.data.activityPoints)
-
-	// init "/data/channels"
-	await initDoc(refs.channels, botCache.data.channels)
-
-	// init "/data/rolePoints"
-	await initDoc(refs.rolePoints, botCache.data.rolePoints)
-
-	// init "/data/snowflake2uid"
-	await initDoc(refs.snowflake2uid, botCache.data.snowflake2uid)
+	await initDataDoc("achievementPoints")
+	await initDataDoc("activityPoints")
+	await initDataDoc("channels")
+	await initDataDoc("rolePoints")
+	await initDataDoc("snowflake2uid")
 
 	// the following data exist because firestore collections must have at least
 	// one document to exist
@@ -73,12 +59,17 @@ async function initializeDB() {
 	createUser("nobody")
 }
 
-async function initDoc(
-	docRef: DocumentReference<DocumentData>,
-	dataRef: WithFieldValue<DocumentData>
+async function initDataDoc(
+	key: keyof typeof refs & keyof typeof botCache.data
 ) {
-	const docSnapshot = await docRef.get()
+	const docSnapshot = await refs[key].get()
 	const data = docSnapshot.data()
-	if (data) dataRef = data
-	else await docRef.create(dataRef)
+
+	if (data) {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		botCache.data[key] = data
+	} else {
+		await refs[key].create(botCache.data[key])
+	}
 }
