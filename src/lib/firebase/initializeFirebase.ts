@@ -43,11 +43,24 @@ async function initializeReferences() {
 }
 
 async function initializeDB() {
-	await initDataDoc("achievementPoints")
-	await initDataDoc("activityPoints")
-	await initDataDoc("channels")
-	await initDataDoc("rolePoints")
-	await initDataDoc("snowflake2uid")
+	// bruh why doesn't js have built in set intersection feature
+	const dataCacheKeys = Object.keys(refs).filter((key) =>
+		Object.keys(botCache.data).includes(key)
+	)
+
+	dataCacheKeys.forEach(async (_key) => {
+		const key = _key as keyof typeof refs & keyof typeof botCache.data
+		const docSnapshot = await refs[key].get()
+		const data = docSnapshot.data()
+
+		if (data) {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			botCache.data[key] = data
+		} else {
+			await refs[key].create(botCache.data[key])
+		}
+	})
 
 	// the following data exist because firestore collections must have at least
 	// one document to exist
@@ -57,19 +70,4 @@ async function initializeDB() {
 
 	// init "/users"
 	createUser("nobody")
-}
-
-async function initDataDoc(
-	key: keyof typeof refs & keyof typeof botCache.data
-) {
-	const docSnapshot = await refs[key].get()
-	const data = docSnapshot.data()
-
-	if (data) {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		botCache.data[key] = data
-	} else {
-		await refs[key].create(botCache.data[key])
-	}
 }
