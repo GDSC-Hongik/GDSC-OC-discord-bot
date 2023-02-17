@@ -4,7 +4,8 @@ import type { ChatInputCommandInteraction } from "discord.js"
 import { EmbedBuilder } from "discord.js"
 
 import { calculateDevRating } from "../lib/devRating"
-import { getUser, snowflake2UID } from "../lib/firebase"
+import { botCache, getUser, snowflake2UID } from "../lib/firebase"
+import { AchievementNames, Achievements } from "../types/achievements"
 import type { User } from "../types/user"
 
 export class ProfileCommand extends Command {
@@ -62,6 +63,10 @@ DevRating: ${this.formatData(devRating.points)}
 					)}일 (마지막 출석: ${user.attendance.at(-1)})
 포스팅: ${this.formatData(user.posts.length)}개`,
 				},
+				{
+					name: "업적",
+					value: this.formatAchievements(user.achievements),
+				},
 			],
 		})
 			.setThumbnail(interaction.user.avatarURL())
@@ -90,5 +95,15 @@ DevRating: ${this.formatData(devRating.points)}
 		}
 
 		return `**${str}**`
+	}
+
+	formatAchievements(achievements: Achievements[]) {
+		let str = ""
+
+		achievements.forEach((achievement) => {
+			str += `- ${AchievementNames[achievement]} (${botCache.data.achievementPoints[achievement]}점)`
+		})
+
+		return str
 	}
 }
