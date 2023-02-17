@@ -1,8 +1,9 @@
 import moment from "moment-timezone"
 
 import { Achievements } from "../../types/achievements"
+import { Activities } from "../../types/activities"
 import type { User } from "../../types/user"
-import { getUser, setUser, snowflake2UID } from "../firebase"
+import { botCache, getUser, setUser, snowflake2UID } from "../firebase"
 import snowflake2Time from "../snowflake2Time"
 
 export default async function (
@@ -48,7 +49,7 @@ async function updateUserData(uid: string, user: User, YYYYMMDD: string) {
 	user.achievements = Array.from(achievementSet)
 
 	// update XP points
-	// user.points += botCache.data.points
+	user.points += botCache.data.activityPoints[Activities.ATTENDANCE]
 
 	// write to DB
 	await setUser(uid, user)
