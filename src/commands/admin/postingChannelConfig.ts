@@ -16,7 +16,7 @@ const OperationName = {
 	remove: "제거",
 }
 
-export class SetInfoSharingChannelCommand extends Command {
+export class PostingChannelConfigCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options })
 	}
