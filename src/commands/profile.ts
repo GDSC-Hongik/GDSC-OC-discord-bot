@@ -6,6 +6,7 @@ import { EmbedBuilder } from "discord.js"
 import { calculateDevRating } from "../lib/devRating"
 import { botCache, getUser, snowflake2UID } from "../lib/firebase"
 import { AchievementNames, Achievements } from "../types/achievements"
+import { Tier, tierSchema } from "../types/tier"
 import type { User } from "../types/user"
 
 export class ProfileCommand extends Command {
@@ -52,7 +53,7 @@ export class ProfileCommand extends Command {
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
 			// url: "<profile URL>",
-			description: `티어: ${this.formatData(devRating.tier)}
+			description: `티어: ${this.formatTier(devRating.tier)}
 DevRating: ${this.formatData(devRating.points)}
 포인트: ${this.formatData(user.points)}`,
 			fields: [
@@ -64,7 +65,7 @@ DevRating: ${this.formatData(devRating.points)}
 포스팅: ${this.formatData(user.posts.length)}개`,
 				},
 				{
-					name: "업적",
+					name: "업적 (달성 순서대로)",
 					value: this.formatAchievements(user.achievements),
 				},
 			],
@@ -97,7 +98,15 @@ DevRating: ${this.formatData(devRating.points)}
 		return `**${str}**`
 	}
 
-	formatAchievements(achievements: Achievements[]) {
+	formatTier(tier: Tier): string {
+		return Object.keys(tierSchema.enum)
+			.map((elem) => {
+				return elem === tier ? `__**${elem}**__` : elem
+			})
+			.join(" / ")
+	}
+
+	formatAchievements(achievements: Achievements[]): string {
 		let str = ""
 
 		achievements.forEach((achievement) => {
