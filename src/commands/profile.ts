@@ -118,7 +118,7 @@ DevRating: ${devRatingPoints}
 		return Object.keys(tierSchema.enum)
 			.map((elem) => {
 				if (elem === tierSchema.enum.UNRANKED) return undefined
-				return elem === tier ? `__**${elem}**__` : elem
+				return elem === tier ? `**${elem}**` : elem
 			})
 			.filter((elem) => elem !== undefined)
 			.join(" / ")
