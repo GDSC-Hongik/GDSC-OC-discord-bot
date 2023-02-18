@@ -13,9 +13,9 @@ export default async function ({
 }) {
 	const user = await getUser(uid)
 	if (!user) return
-	user.points += botCache.data.activityPoints[Activities.POST_LIKE_RECEIVE]
-	await setUser(uid, user)
+	user.points -= botCache.data.activityPoints[Activities.POST_LIKE_RECEIVE]
+	setUser(uid, user)
 
-	post.likes += 1
+	post.likes -= 1
 	updatePost(postID, post)
 }
