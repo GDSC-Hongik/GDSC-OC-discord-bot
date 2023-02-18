@@ -17,7 +17,7 @@ import {
 	CreatePostFailReason,
 	deletePost,
 	DeletePostFailReason,
-	UpdatePost,
+	updatePost,
 	UpdatePostFailReason,
 } from "./posts"
 import { getRolePoint, setRolePoint } from "./rolePoints"
@@ -98,6 +98,6 @@ export {
 	setUserDiscordID,
 	snowflake2UID,
 	updateChannels,
-	UpdatePost,
+	updatePost,
 	UpdatePostFailReason,
 }

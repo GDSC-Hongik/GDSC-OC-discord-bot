@@ -85,7 +85,7 @@ export async function deletePost(postID: string): Promise<
 	return { success: true }
 }
 
-export async function UpdatePost(
+export async function updatePost(
 	postID: string,
 	data: Post
 ): Promise<
