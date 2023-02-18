@@ -42,18 +42,18 @@ export async function getPost(postIDOrURL: string): Promise<
 		postData = querySnapshot.docs[0].data()
 	} else {
 		postID = postIDOrURL
-		postData = (await refs.posts.doc(postIDOrURL).get()).data()
+		postData = (await refs.posts.doc(postID).get()).data()
 	}
 
 	// check if the data is valid
 	const parseResult = postSchema.safeParse(postData)
 
 	if (parseResult.success) {
-		botCache.posts[postIDOrURL] = parseResult.data
+		botCache.posts[postID] = parseResult.data
 		return { success: true, data: { post: parseResult.data, postID } }
 	} else {
 		console.error(
-			`Failed to get post "${postIDOrURL}". Data does not fit the schema.`
+			`Failed to get post "${postID}". Data does not fit the schema.`
 		)
 		return { success: false, reason: GetPostFailReason.InvalidSchema }
 	}
