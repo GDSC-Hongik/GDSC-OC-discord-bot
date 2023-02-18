@@ -99,10 +99,14 @@ DevRating: ${this.formatData(devRating.points)}
 	}
 
 	formatTier(tier: Tier): string {
+		if (tier === "UNRANKED") return "UNRANKED"
+
 		return Object.keys(tierSchema.enum)
 			.map((elem) => {
+				if (elem === "UNRANKED") return undefined
 				return elem === tier ? `__**${elem}**__` : elem
 			})
+			.filter((elem) => elem !== undefined)
 			.join(" / ")
 	}
 
