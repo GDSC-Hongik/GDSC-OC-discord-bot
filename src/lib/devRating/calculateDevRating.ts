@@ -1,4 +1,4 @@
-import { Tier, tierSchema } from "../../types/tier"
+import { devRating2Tier, Tier, tierSchema } from "../../types/tier"
 import { User } from "../../types/user"
 import { botCache } from "../firebase"
 
@@ -45,11 +45,11 @@ function calculateAchievementPoints(user: User): number {
 }
 
 function calculateTier(points: number): Tier {
-	if (points > 2000) return tierSchema.enum.V
-	if (points > 1000) return tierSchema.enum.IV
-	if (points > 500) return tierSchema.enum.III
-	if (points > 250) return tierSchema.enum.II
-	if (points > 20) return tierSchema.enum.I
+	if (points > devRating2Tier.V) return tierSchema.enum.V
+	if (points > devRating2Tier.IV) return tierSchema.enum.IV
+	if (points > devRating2Tier.III) return tierSchema.enum.III
+	if (points > devRating2Tier.II) return tierSchema.enum.II
+	if (points > devRating2Tier.I) return tierSchema.enum.I
 
 	return tierSchema.enum.UNRANKED
 }
