@@ -123,7 +123,7 @@ DevRating: ${devRatingPoints}
 		let str = ""
 
 		achievements.forEach((achievement) => {
-			str += `- ${AchievementNames[achievement]} (${botCache.data.achievementPoints[achievement]}점)\n`
+			str += `● ${AchievementNames[achievement]} (${botCache.data.achievementPoints[achievement]}점)\n`
 		})
 
 		return str
