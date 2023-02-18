@@ -50,6 +50,10 @@ export class ProfileCommand extends Command {
 
 	async replyProfile(interaction: ChatInputCommandInteraction, user: User) {
 		const devRating = await calculateDevRating(user)
+		const lastAttendance = user.attendance.at(-1)
+			? `(마지막 출석: ${user.attendance.at(-1)})`
+			: ""
+
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
 			// url: "<profile URL>",
@@ -61,7 +65,7 @@ DevRating: ${this.formatData(devRating.points)}
 					name: "활동",
 					value: `출석: 총 ${this.formatData(
 						user.attendance.length
-					)}일 (마지막 출석: ${user.attendance.at(-1)})
+					)}일 ${lastAttendance}
 포스팅: ${this.formatData(user.posts.length)}개`,
 				},
 				{
