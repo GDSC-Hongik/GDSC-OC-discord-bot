@@ -17,25 +17,40 @@ export enum DeletePostFailReason {}
 export enum UpdatePostFailReason {}
 
 export async function getPost(postIDOrURL: string): Promise<
-	| { success: true; data: Post } //
+	| { success: true; data: { post: Post; postID: string } } //
 	| { success: false; reason: GetPostFailReason }
 > {
+	// return cached data if it exists
+	if (botCache.posts[postIDOrURL])
+		return {
+			success: true,
+			data: {
+				post: botCache.posts[postIDOrURL],
+				postID: postIDOrURL,
+			},
+		}
+
+	// get post data from DB
+	let postID: string
 	let postData: DocumentData | undefined
 	if (postIDOrURL.startsWith("https://")) {
 		const querySnapshot = await refs.posts
 			.where("discordLink", "==", postIDOrURL)
 			.get()
 
+		postID = querySnapshot.docs[0].id
 		postData = querySnapshot.docs[0].data()
 	} else {
+		postID = postIDOrURL
 		postData = (await refs.posts.doc(postIDOrURL).get()).data()
 	}
 
+	// check if the data is valid
 	const parseResult = postSchema.safeParse(postData)
 
 	if (parseResult.success) {
 		botCache.posts[postIDOrURL] = parseResult.data
-		return { success: true, data: parseResult.data }
+		return { success: true, data: { post: parseResult.data, postID } }
 	} else {
 		console.error(
 			`Failed to get post "${postIDOrURL}". Data does not fit the schema.`
