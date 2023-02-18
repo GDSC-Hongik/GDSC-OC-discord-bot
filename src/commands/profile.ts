@@ -49,24 +49,26 @@ export class ProfileCommand extends Command {
 	}
 
 	async replyProfile(interaction: ChatInputCommandInteraction, user: User) {
-		const devRating = await calculateDevRating(user)
+		const devRatingData = await calculateDevRating(user)
 		const lastAttendance = user.attendance.at(-1)
 			? `(마지막 출석: ${user.attendance.at(-1)})`
 			: ""
+		const tier = this.formatTier(devRatingData.tier)
+		const devRatingPoints = this.formatData(devRatingData.points)
+		const points = this.formatData(user.points)
+		const totalAttendanceCount = this.formatData(user.attendance.length)
+		const totalPostCount = this.formatData(user.posts.length)
 
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
-			// url: "<profile URL>",
-			description: `티어: ${this.formatTier(devRating.tier)}
-DevRating: ${this.formatData(devRating.points)}
-포인트: ${this.formatData(user.points)}`,
+			description: `티어: ${tier}
+DevRating: ${devRatingPoints}
+포인트: ${points}`,
 			fields: [
 				{
 					name: "활동",
-					value: `출석: 총 ${this.formatData(
-						user.attendance.length
-					)}일 ${lastAttendance}
-포스팅: ${this.formatData(user.posts.length)}개`,
+					value: `출석: 총 ${totalAttendanceCount}일 ${lastAttendance}
+포스팅: ${totalPostCount}개`,
 				},
 			],
 		})
