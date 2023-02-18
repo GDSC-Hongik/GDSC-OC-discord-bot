@@ -19,16 +19,26 @@ export async function getRolePoint(
 	return cacheRolePoints(roleID, rolePointsData[roleID])
 }
 
+/**
+ * Sets devRating points for a discord role.
+ * If `point` is falsy (i.e. is 0), the function removes the role from firestore.
+ *
+ * @param roleID - Discord role snowflake
+ * @param point - Points that will be given to
+ * @returns
+ */
 export async function setRolePoint(
 	roleID: string,
-	point: number | undefined | null
-): Promise<number | undefined> {
+	point: number
+): Promise<number> {
 	if (!point) {
 		await refs.rolePoints.update({
 			[roleID]: FieldValue.delete(),
 		})
 
-		return undefined
+		delete botCache.data.rolePoints[roleID]
+
+		return 0
 	}
 
 	await refs.rolePoints.set({ [roleID]: point }, { merge: true })
