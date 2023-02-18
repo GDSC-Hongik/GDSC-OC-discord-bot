@@ -68,14 +68,17 @@ DevRating: ${this.formatData(devRating.points)}
 					)}일 ${lastAttendance}
 포스팅: ${this.formatData(user.posts.length)}개`,
 				},
-				{
-					name: "업적 (달성 순서대로)",
-					value: this.formatAchievements(user.achievements),
-				},
 			],
 		})
 			.setThumbnail(interaction.user.avatarURL())
 			.setTimestamp()
+
+		if (user.achievements.length > 0) {
+			embed.addFields({
+				name: "업적 (달성 순서대로)",
+				value: this.formatAchievements(user.achievements),
+			})
+		}
 
 		if (interaction.guild && interaction.guild.name)
 			embed.setFooter({
