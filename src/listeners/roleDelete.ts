@@ -8,7 +8,6 @@ export class ReadyListener extends Listener<typeof Events.GuildRoleDelete> {
 		super(context, {
 			...options,
 			once: true,
-			event: Events.GuildRoleDelete,
 		})
 	}
 

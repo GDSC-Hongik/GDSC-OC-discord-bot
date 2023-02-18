@@ -6,7 +6,6 @@ export class ReadyListener extends Listener<typeof Events.ClientReady> {
 		super(context, {
 			...options,
 			once: true,
-			event: Events.ClientReady,
 		})
 	}
 
