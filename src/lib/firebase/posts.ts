@@ -1,3 +1,4 @@
+import { DocumentData } from "firebase-admin/firestore"
 import { customAlphabet } from "nanoid"
 
 import { Post, postSchema } from "../../types/post"
@@ -15,20 +16,29 @@ export enum CreatePostFailReason {}
 export enum DeletePostFailReason {}
 export enum UpdatePostFailReason {}
 
-export async function getPost(postID: string): Promise<
+export async function getPost(postIDOrURL: string): Promise<
 	| { success: true; data: Post } //
 	| { success: false; reason: GetPostFailReason }
 > {
-	const postDocRef = refs.posts.doc(postID)
-	const postData = await postDocRef.get()
+	let postData: DocumentData | undefined
+	if (postIDOrURL.startsWith("https://")) {
+		const querySnapshot = await refs.posts
+			.where("discordLink", "==", postIDOrURL)
+			.get()
+
+		postData = querySnapshot.docs[0].data()
+	} else {
+		postData = (await refs.posts.doc(postIDOrURL).get()).data()
+	}
+
 	const parseResult = postSchema.safeParse(postData)
 
 	if (parseResult.success) {
-		botCache.posts[postID] = parseResult.data
+		botCache.posts[postIDOrURL] = parseResult.data
 		return { success: true, data: parseResult.data }
 	} else {
 		console.error(
-			`Failed to get post "${postID}". Data does not fit the schema.`
+			`Failed to get post "${postIDOrURL}". Data does not fit the schema.`
 		)
 		return { success: false, reason: GetPostFailReason.InvalidSchema }
 	}
