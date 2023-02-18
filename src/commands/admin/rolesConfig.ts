@@ -17,7 +17,7 @@ enum ActionType {
 	UNREGISTER = "등록 취소",
 }
 
-export class ConfigureRoleCommand extends Command {
+export class RolesConfigCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options })
 	}
