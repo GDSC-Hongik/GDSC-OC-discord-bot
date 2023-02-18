@@ -1,6 +1,6 @@
 import type { ChatInputCommand } from "@sapphire/framework"
 import { Command } from "@sapphire/framework"
-import type { ChatInputCommandInteraction } from "discord.js"
+import { ChatInputCommandInteraction, roleMention } from "discord.js"
 import { EmbedBuilder } from "discord.js"
 
 import { calculateDevRating } from "../lib/devRating"
@@ -75,12 +75,17 @@ DevRating: ${devRatingPoints}
 			.setThumbnail(interaction.user.avatarURL())
 			.setTimestamp()
 
-		if (user.achievements.length > 0) {
+		if (user.roles.some((roleID) => botCache.data.rolePoints[roleID]))
+			embed.addFields({
+				name: "역할",
+				value: this.formatRoles(user.roles),
+			})
+
+		if (user.achievements.length > 0)
 			embed.addFields({
 				name: "업적 (달성 순서대로)",
 				value: this.formatAchievements(user.achievements),
 			})
-		}
 
 		if (interaction.guild && interaction.guild.name)
 			embed.setFooter({
@@ -124,6 +129,19 @@ DevRating: ${devRatingPoints}
 
 		achievements.forEach((achievement) => {
 			str += `● ${AchievementNames[achievement]} (${botCache.data.achievementPoints[achievement]}점)\n`
+		})
+
+		return str
+	}
+
+	formatRoles(roleIDs: string[]): string {
+		let str = ""
+
+		roleIDs.map((roleID) => {
+			if (botCache.data.rolePoints[roleID])
+				str += `● ${roleMention(roleID)} (${
+					botCache.data.rolePoints[roleID]
+				}점)\n`
 		})
 
 		return str
