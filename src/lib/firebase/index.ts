@@ -38,6 +38,8 @@ export let refs = {
 	users: {} as CollectionReference<DocumentData>,
 }
 
+// These are the default values.
+// Whatever is in the database will override these data.
 export const botCache: BotCache = {
 	data: {
 		achievementPoints: {
