@@ -1,6 +1,7 @@
 import type { Message } from "discord.js"
 
 import { Activities } from "../../types/activities"
+import { User } from "../../types/user"
 import {
 	botCache,
 	createPost,
@@ -23,15 +24,16 @@ export default async function (message: Message): Promise<void> {
 		discordLink: message.channel.url,
 	})
 
-	if (createPostResult.success) {
-		user.posts.push(createPostResult.postID)
-		user.points += botCache.data.activityPoints[Activities.POST_CREATE]
-		await setUser(uid, user)
+	if (!createPostResult.success)
+		return logError(uid, "Failed to add post to DB")
 
-		return
-	}
+	await updateUser(createPostResult.postID, uid, user)
+}
 
-	logError(uid, "Failed to add post to DB")
+async function updateUser(postID: string, uid: string, user: User) {
+	user.posts.push(postID)
+	user.points += botCache.data.activityPoints[Activities.POST_CREATE]
+	await setUser(uid, user)
 }
 
 function logError(user: string, reason: string): void {
