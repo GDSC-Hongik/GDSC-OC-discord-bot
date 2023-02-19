@@ -51,15 +51,17 @@ async function initializeDB() {
 	dataCacheKeys.forEach(async (_key) => {
 		const key = _key as keyof typeof refs & keyof typeof botCache.data
 		const docSnapshot = await refs[key].get()
-		const data = docSnapshot.data()
+		const data = docSnapshot.data() || {}
 
-		if (data) {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			botCache.data[key] = data
-		} else {
-			await refs[key].create(botCache.data[key])
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		botCache.data[key] = {
+			...botCache.data[key],
+			...data,
 		}
+
+		if (JSON.stringify(data) !== JSON.stringify(botCache.data[key]))
+			await refs[key].set(botCache.data[key], { merge: true })
 	})
 
 	// the following data exist because firestore collections must have at least
