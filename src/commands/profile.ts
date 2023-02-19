@@ -68,7 +68,7 @@ DevRating: ${devRatingPoints}
 				{
 					name: "활동",
 					value: `출석: 총 ${totalAttendanceCount}일 ${lastAttendance}
-포스팅: ${totalPostCount}개`,
+정보공유: ${totalPostCount}번`,
 				},
 			],
 		})
