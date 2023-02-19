@@ -1,5 +1,6 @@
 import type { Message } from "discord.js"
 
+import { Achievements } from "../../types/achievements"
 import { Activities } from "../../types/activities"
 import { User } from "../../types/user"
 import {
@@ -31,8 +32,22 @@ export default async function (message: Message): Promise<void> {
 }
 
 async function updateUser(postID: string, uid: string, user: User) {
+	// add post to user
 	user.posts.push(postID)
+
+	// reward XP points
 	user.points += botCache.data.activityPoints[Activities.POST_CREATE]
+
+	// reward achievement
+	const achievementSet = new Set(user.achievements)
+	const postsCount = user.posts.length
+	if (postsCount >= 1) achievementSet.add(Achievements.POST_CREATE_1)
+	if (postsCount >= 10) achievementSet.add(Achievements.POST_CREATE_10)
+	if (postsCount >= 30) achievementSet.add(Achievements.POST_CREATE_30)
+	if (postsCount >= 50) achievementSet.add(Achievements.POST_CREATE_50)
+	if (postsCount >= 100) achievementSet.add(Achievements.POST_CREATE_100)
+	user.achievements = Array.from(achievementSet)
+
 	await setUser(uid, user)
 }
 
