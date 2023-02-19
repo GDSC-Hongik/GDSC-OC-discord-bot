@@ -47,6 +47,12 @@ export const botCache: BotCache = {
 			[Achievements.ATTENDANCE_50]: 50,
 			[Achievements.ATTENDANCE_100]: 100,
 			[Achievements.ATTENDANCE_300]: 300,
+
+			[Achievements.POST_CREATE_1]: 5,
+			[Achievements.POST_CREATE_10]: 15,
+			[Achievements.POST_CREATE_30]: 30,
+			[Achievements.POST_CREATE_50]: 50,
+			[Achievements.POST_CREATE_100]: 100,
 		},
 		activityPoints: {
 			[Activities.ATTENDANCE]: 1,
