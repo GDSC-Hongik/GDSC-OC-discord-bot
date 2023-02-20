@@ -21,7 +21,10 @@ export async function getAssignment(
 	return undefined
 }
 
-export async function setAssignment(data: Assignment, _id?: string) {
+export async function setAssignment(
+	data: Assignment,
+	_id?: string
+): Promise<Assignment> {
 	const id = _id ? _id : nanoid()
 
 	botCache.assignments[id] = {
@@ -30,4 +33,6 @@ export async function setAssignment(data: Assignment, _id?: string) {
 	}
 
 	await refs.assignments.doc(id).set(botCache.assignments[id], { merge: true })
+
+	return botCache.assignments[id]
 }
