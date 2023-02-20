@@ -28,10 +28,13 @@ export default async function (
 	}
 
 	// create required fields
-	await docRef.set(defaultData, { merge: true })
-
-	// restore data
-	await docRef.set(data, { merge: true })
+	await docRef.set(
+		{
+			...defaultData,
+			...data,
+		},
+		{ merge: true }
+	)
 
 	return { success: true }
 }
