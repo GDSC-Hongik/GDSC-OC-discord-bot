@@ -1,13 +1,8 @@
 import { DocumentData } from "firebase-admin/firestore"
-import { customAlphabet } from "nanoid"
 
 import { Post, postSchema } from "../../types/post"
+import nanoid from "../nanoid"
 import { botCache, refs } from "."
-
-const nanoid = customAlphabet(
-	"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-	32
-)
 
 export enum GetPostFailReason {
 	InvalidSchema,
