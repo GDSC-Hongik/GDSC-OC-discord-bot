@@ -11,6 +11,7 @@ import { Activities } from "../../types/activities"
 import type BotCache from "../../types/botCache"
 import { getChannels, updateChannels } from "./channel"
 import fixSchema from "./fixSchema"
+import getGitHubUID from "./getGitHubUID"
 import initializeFirebase from "./initializeFirebase"
 import {
 	createPost,
@@ -98,6 +99,7 @@ export {
 	DeletePostFailReason,
 	fixSchema,
 	getChannels,
+	getGitHubUID,
 	getRolePoint,
 	getUser,
 	initializeFirebase,
