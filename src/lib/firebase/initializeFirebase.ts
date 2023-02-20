@@ -68,8 +68,8 @@ async function initializeDB() {
 	// one document to exist
 
 	// init "/posts"
-	createPost({ author: "nobody", discord: false, likes: 0 }, "EmptyPost")
+	createPost({ author: "", discord: false, likes: 0 }, "null")
 
 	// init "/users"
-	createUser("nobody")
+	createUser("null")
 }
