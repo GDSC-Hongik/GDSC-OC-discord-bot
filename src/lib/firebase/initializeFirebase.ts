@@ -11,6 +11,7 @@ import {
 	createUser,
 	db,
 	refs,
+	setAssignment,
 	setAuth,
 	setDB,
 	setRefs,
@@ -32,6 +33,7 @@ export default async function () {
 
 async function initializeReferences() {
 	setRefs({
+		assignments: db.collection("assignments"),
 		achievementPoints: db.collection("data").doc("achievementPoints"),
 		activityPoints: db.collection("data").doc("activityPoints"),
 		channels: db.collection("data").doc("channels"),
@@ -66,6 +68,9 @@ async function initializeDB() {
 
 	// the following data exist because firestore collections must have at least
 	// one document to exist
+
+	// init "/assignments"
+	setAssignment({ name: "", filePath: "", repository: "" }, "null")
 
 	// init "/posts"
 	createPost({ author: "", discord: false, likes: 0 }, "null")

@@ -9,6 +9,7 @@ import type {
 import { Achievements } from "../../types/achievements"
 import { Activities } from "../../types/activities"
 import type BotCache from "../../types/botCache"
+import { getAssignment, setAssignment } from "./assignments"
 import { getChannels, updateChannels } from "./channel"
 import fixSchema from "./fixSchema"
 import getGitHubUID from "./getGitHubUID"
@@ -30,11 +31,15 @@ export let auth: Auth
 export let db: Firestore
 
 export let refs = {
+	// documents
 	achievementPoints: {} as DocumentReference<DocumentData>,
 	activityPoints: {} as DocumentReference<DocumentData>,
 	channels: {} as DocumentReference<DocumentData>,
 	rolePoints: {} as DocumentReference<DocumentData>,
 	snowflake2uid: {} as DocumentReference<DocumentData>,
+
+	// collections
+	assignments: {} as CollectionReference<DocumentData>,
 	posts: {} as CollectionReference<DocumentData>,
 	users: {} as CollectionReference<DocumentData>,
 }
@@ -42,6 +47,7 @@ export let refs = {
 // These are the default values.
 // Whatever is in the database will override these data.
 export const botCache: BotCache = {
+	assignments: {},
 	data: {
 		achievementPoints: {
 			[Achievements.ATTENDANCE_1]: 5,
@@ -98,11 +104,13 @@ export {
 	deletePost,
 	DeletePostFailReason,
 	fixSchema,
+	getAssignment,
 	getChannels,
 	getGitHubUID,
 	getRolePoint,
 	getUser,
 	initializeFirebase,
+	setAssignment,
 	setRolePoint,
 	setUser,
 	setUserDiscordID,

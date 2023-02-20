@@ -1,5 +1,6 @@
 import type { Achievements } from "./achievements"
 import type { Activities } from "./activities"
+import { Assignment } from "./assignments"
 import type { Post } from "./post"
 import type { User } from "./user"
 
@@ -8,6 +9,7 @@ export interface ChannelsCache {
 }
 
 export default interface BotCache {
+	assignments: { [assignmentID: string]: Assignment }
 	data: {
 		achievementPoints: { [key in Achievements]: number }
 		activityPoints: { [key in Activities]: number }
