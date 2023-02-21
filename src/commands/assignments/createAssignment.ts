@@ -65,6 +65,7 @@ export class PostingChannelConfigCommand extends Command {
 			name: assignmentName,
 			repository: repoName,
 			filePath,
+			closed: false,
 		}
 
 		// create assignment

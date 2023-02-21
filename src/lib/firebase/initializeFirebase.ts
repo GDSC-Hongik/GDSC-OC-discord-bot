@@ -70,7 +70,10 @@ async function initializeDB() {
 	// one document to exist
 
 	// init "/assignments"
-	setAssignment({ name: "", filePath: "", repository: "" }, "null")
+	setAssignment(
+		{ name: "", filePath: "", repository: "", closed: true },
+		"null"
+	)
 
 	// init "/posts"
 	createPost({ author: "", discord: false, likes: 0 }, "null")
