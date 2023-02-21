@@ -7,10 +7,10 @@ import type {
 /**
  * Fix user database to fit schema. Can not remove or rename fields yet.
  */
-export default async function (
+export default async function <T>(
 	docRef: DocumentReference,
 	defaultData: PartialWithFieldValue<DocumentData>
-): Promise<{ success: boolean }> {
+): Promise<{ success: false } | { success: true; data: T }> {
 	const doc = await docRef.get()
 	if (!doc) {
 		console.error(
@@ -27,14 +27,12 @@ export default async function (
 		return { success: false }
 	}
 
-	// create required fields
-	await docRef.set(
-		{
-			...defaultData,
-			...data,
-		},
-		{ merge: true }
-	)
+	const newData: PartialWithFieldValue<DocumentData> = {
+		...defaultData,
+		...data,
+	}
 
-	return { success: true }
+	await docRef.set(newData, { merge: true })
+
+	return { success: true, data: newData as T }
 }
