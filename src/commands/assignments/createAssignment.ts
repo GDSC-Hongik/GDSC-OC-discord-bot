@@ -43,7 +43,7 @@ export class PostingChannelConfigCommand extends Command {
 						.setDescription("과제 제출 확인시 확인할 파일의 경로")
 						.setRequired(true)
 				)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.setDMPermission(false)
 		)
 	}
