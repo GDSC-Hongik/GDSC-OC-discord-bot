@@ -16,7 +16,10 @@ export async function getAssignment(
 	if (parseResult.success) return (botCache.assignments[id] = parseResult.data)
 
 	console.error(`Failed to get assignment "${id}". Data is invalid.`)
-	await fixSchema(docRef, defaultAssignment)
+
+	const fixResult = await fixSchema<Assignment>(docRef, defaultAssignment)
+
+	if (fixResult.success) return fixResult.data
 
 	return undefined
 }
