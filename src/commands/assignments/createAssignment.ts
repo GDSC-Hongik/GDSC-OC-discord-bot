@@ -100,7 +100,6 @@ export class PostingChannelConfigCommand extends Command {
 **파일 경로** - ${assignmentData.filePath}`,
 				}),
 			],
-			ephemeral: true,
 		})
 	}
 }
