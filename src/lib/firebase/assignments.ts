@@ -6,6 +6,31 @@ import {
 import nanoid from "../nanoid"
 import { botCache, fixSchema, refs } from "."
 
+export async function listAssignments(
+	listClosed = false
+): Promise<{ [assignmentID: string]: Assignment }> {
+	const querySnapshot = listClosed
+		? await refs.assignments.get()
+		: await refs.assignments.where("closed", "==", false).get()
+
+	const data: { [assignmentID: string]: Assignment } = {}
+
+	for (const doc of querySnapshot.docs) {
+		const assignment = await getAssignment(doc.id)
+
+		if (
+			!assignment ||
+			// exclude firestore filler data
+			doc.id === "null"
+		)
+			continue
+
+		data[doc.id] = assignment
+	}
+
+	return data
+}
+
 export async function getAssignment(
 	id: string
 ): Promise<Assignment | undefined> {
