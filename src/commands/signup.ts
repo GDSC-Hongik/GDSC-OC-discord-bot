@@ -4,10 +4,6 @@ import { Command } from "@sapphire/framework"
 import type { ChatInputCommandInteraction } from "discord.js"
 
 export class SignUpCommand extends Command {
-	public constructor(context: Command.Context, options: Command.Options) {
-		super(context, { ...options })
-	}
-
 	public override registerApplicationCommands(
 		registry: ChatInputCommand.Registry
 	) {

@@ -10,10 +10,6 @@ import { Tier, tierSchema } from "../types/tier"
 import type { User } from "../types/user"
 
 export class ProfileCommand extends Command {
-	public constructor(context: Command.Context, options: Command.Options) {
-		super(context, { ...options })
-	}
-
 	public override registerApplicationCommands(
 		registry: ChatInputCommand.Registry
 	) {
