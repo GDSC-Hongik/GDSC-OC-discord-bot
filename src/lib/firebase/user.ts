@@ -57,11 +57,8 @@ async function cacheUser(uid: string, user: User): Promise<User | undefined> {
 		)}`
 	)
 
-	const fixResult = await fixSchema(refs.users.doc(uid), defaultUser)
-	if (fixResult.success) {
-		const fixedUser = (await refs.users.doc(uid).get()).data()
-		return (botCache.users[uid] = fixedUser as User)
-	}
+	const fixResult = await fixSchema<User>(refs.users.doc(uid), defaultUser)
+	if (fixResult.success) return (botCache.users[uid] = fixResult.data)
 
 	return undefined
 }
