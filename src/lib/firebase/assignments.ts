@@ -49,8 +49,12 @@ export async function getAssignment(
 	return undefined
 }
 
+export async function createAssignment(data: Assignment, _id?: string) {
+	await setAssignment(data, _id)
+}
+
 export async function setAssignment(
-	data: Assignment,
+	data: Partial<Assignment>,
 	_id?: string
 ): Promise<Assignment> {
 	const id = _id ? _id : nanoid()
@@ -63,4 +67,11 @@ export async function setAssignment(
 	await refs.assignments.doc(id).set(botCache.assignments[id], { merge: true })
 
 	return botCache.assignments[id]
+}
+
+export async function deleteAssignment(id: string): Promise<boolean> {
+	delete botCache.assignments[id]
+	await refs.assignments.doc(id).delete()
+
+	return true
 }

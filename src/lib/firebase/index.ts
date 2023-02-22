@@ -9,7 +9,13 @@ import type {
 import { Achievements } from "../../types/achievements"
 import { Activities } from "../../types/activities"
 import type BotCache from "../../types/botCache"
-import { getAssignment, listAssignments, setAssignment } from "./assignments"
+import {
+	createAssignment,
+	deleteAssignment,
+	getAssignment,
+	listAssignments,
+	setAssignment,
+} from "./assignments"
 import { getChannels, updateChannels } from "./channel"
 import fixSchema from "./fixSchema"
 import getGitHubUID from "./getGitHubUID"
@@ -98,10 +104,12 @@ export function setRefs(newRefs: typeof refs) {
 }
 
 export {
+	createAssignment,
 	createPost,
 	CreatePostFailReason,
 	createUser,
 	CreateUserFailReason,
+	deleteAssignment,
 	deletePost,
 	DeletePostFailReason,
 	fixSchema,
