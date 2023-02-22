@@ -7,11 +7,11 @@ import { getFirestore } from "firebase-admin/firestore"
 import serviceAccount from "../serviceAccountKey.json"
 import {
 	botCache,
+	createAssignment,
 	createPost,
 	createUser,
 	db,
 	refs,
-	setAssignment,
 	setAuth,
 	setDB,
 	setRefs,
@@ -70,7 +70,7 @@ async function initializeDB() {
 	// one document to exist
 
 	// init "/assignments"
-	setAssignment(
+	createAssignment(
 		{ name: "", filePath: "", repository: "", closed: true },
 		"null"
 	)
