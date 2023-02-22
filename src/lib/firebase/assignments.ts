@@ -49,16 +49,14 @@ export async function getAssignment(
 	return undefined
 }
 
-export async function createAssignment(data: Assignment, _id?: string) {
-	await setAssignment(data, _id)
+export async function createAssignment(data: Assignment, id?: string) {
+	await setAssignment(data, id ? id : nanoid())
 }
 
 export async function setAssignment(
 	data: Partial<Assignment>,
-	_id?: string
+	id: string
 ): Promise<Assignment> {
-	const id = _id ? _id : nanoid()
-
 	botCache.assignments[id] = {
 		...botCache.assignments[id],
 		...data,

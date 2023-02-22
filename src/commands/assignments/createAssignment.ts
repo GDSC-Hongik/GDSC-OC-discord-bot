@@ -4,7 +4,7 @@ import { Command } from "@sapphire/framework"
 import { ChatInputCommandInteraction } from "discord.js"
 import { PermissionFlagsBits } from "discord.js"
 
-import { setAssignment } from "../../lib/firebase"
+import { createAssignment } from "../../lib/firebase"
 import { Assignment } from "../../types/assignments"
 
 const Options = {
@@ -65,7 +65,7 @@ export class PostingChannelConfigCommand extends Command {
 		}
 
 		// create assignment
-		await setAssignment(assignmentData)
+		await createAssignment(assignmentData)
 
 		this.replySuccess(interaction, assignmentData)
 	}
