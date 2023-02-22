@@ -90,6 +90,7 @@ export function setAuth(newAuth: Auth) {
 
 export function setDB(newDB: Firestore) {
 	db = newDB
+	db.settings({ ignoreUndefinedProperties: true })
 }
 
 export function setRefs(newRefs: typeof refs) {
