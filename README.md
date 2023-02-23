@@ -20,7 +20,6 @@
 
    ```dosini
    DISCORD_BOT_TOKEN=<디스코드 봇 토큰>
-   DISCORD_BOT_ID=<디스코드 봇 ID>
    SIGN_UP_URL=<회원가입 URL>
    ```
 
