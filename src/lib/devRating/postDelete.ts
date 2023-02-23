@@ -6,7 +6,8 @@ import { botCache, deletePost, getUser, refs, setUser } from "../firebase"
 
 export default async function (thread: ThreadChannel): Promise<void> {
 	const post = await refs.posts.where("discordLink", "==", thread.url).get()
-	post.docs.forEach(async (postDoc) => {
+
+	for (const postDoc of post.docs) {
 		const postID = postDoc.id
 		const postData = postDoc.data() as Post
 
@@ -24,7 +25,7 @@ export default async function (thread: ThreadChannel): Promise<void> {
 		// remove post itself
 		const postDeleteResult = await deletePost(postID)
 		if (!postDeleteResult.success) logError(postData.author)
-	})
+	}
 }
 
 function logError(user: string): void {

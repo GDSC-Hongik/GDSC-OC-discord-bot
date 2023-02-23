@@ -38,10 +38,10 @@ export async function updateChannels(
 		const IDSet = new Set(botCache.data.channels[name])
 
 		if (operation === "add")
-			channelIDs.forEach((channelID) => IDSet.add(channelID))
+			for (const channelID of channelIDs) IDSet.add(channelID)
 
 		if (operation === "remove")
-			channelIDs.forEach((channelID) => IDSet.delete(channelID))
+			for (const channelID of channelIDs) IDSet.delete(channelID)
 
 		newChannelIDs = Array.from(IDSet)
 	}

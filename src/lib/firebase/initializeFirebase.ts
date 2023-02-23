@@ -50,7 +50,7 @@ async function initializeDB() {
 		Object.keys(botCache.data).includes(key)
 	)
 
-	dataCacheKeys.forEach(async (_key) => {
+	for (const _key of dataCacheKeys) {
 		const key = _key as keyof typeof refs & keyof typeof botCache.data
 		const docSnapshot = await refs[key].get()
 		const data = docSnapshot.data() || {}
@@ -64,7 +64,7 @@ async function initializeDB() {
 
 		if (JSON.stringify(data) !== JSON.stringify(botCache.data[key]))
 			await refs[key].set(botCache.data[key], { merge: true })
-	})
+	}
 
 	// the following data exist because firestore collections must have at least
 	// one document to exist

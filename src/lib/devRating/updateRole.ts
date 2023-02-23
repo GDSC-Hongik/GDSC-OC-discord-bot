@@ -13,10 +13,10 @@ export default async function (
 	// get all role ids except for "@everyone"
 	// tracking all roles in case a role gets points assigned in the future
 	const roles: string[] = []
-	rolesCollection.map((role) => {
+	for (const [, role] of rolesCollection) {
 		if (role.name === "@everyone") return
 		roles.push(role.id)
-	})
+	}
 
 	const user = await getUser(uid)
 	if (!user) return logError(discordUserID, "Failed to get user data")

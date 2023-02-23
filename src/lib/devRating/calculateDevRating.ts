@@ -25,10 +25,9 @@ export default async function (
 function calculateRolePoints(user: User): number {
 	let rolePoints = 0
 
-	user.roles.map((role) => {
+	for (const role of user.roles)
 		if (typeof botCache.data.rolePoints[role] === "number")
 			rolePoints += botCache.data.rolePoints[role]
-	})
 
 	return rolePoints
 }
@@ -36,10 +35,9 @@ function calculateRolePoints(user: User): number {
 function calculateAchievementPoints(user: User): number {
 	let achievementPoints = 0
 
-	user.achievements.map((achievement) => {
+	for (const achievement of user.achievements)
 		if (typeof botCache.data.achievementPoints[achievement] === "number")
 			achievementPoints += botCache.data.achievementPoints[achievement]
-	})
 
 	return achievementPoints
 }

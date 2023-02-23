@@ -15,10 +15,11 @@ export class ReadyListener extends Listener<typeof Events.ClientReady> {
 		// cache all members so it can detect role changes later
 		this.container.logger.info("Caching users...")
 		const guilds = await client.guilds.fetch()
-		guilds.map(async (oauth2guild) => {
+
+		for (const [, oauth2guild] of guilds) {
 			const guild = await oauth2guild.fetch()
 			await guild.members.fetch()
-		})
+		}
 		this.container.logger.info("Caching users...done!")
 	}
 }

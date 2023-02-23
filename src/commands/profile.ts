@@ -123,9 +123,8 @@ DevRating: ${devRatingPoints}
 	formatAchievements(achievements: Achievements[]): string {
 		let str = ""
 
-		achievements.forEach((achievement) => {
+		for (const achievement of achievements)
 			str += `● ${AchievementNames[achievement]} (${botCache.data.achievementPoints[achievement]}점)\n`
-		})
 
 		return str
 	}
@@ -133,12 +132,11 @@ DevRating: ${devRatingPoints}
 	formatRoles(roleIDs: string[]): string {
 		let str = ""
 
-		roleIDs.map((roleID) => {
+		for (const roleID of roleIDs)
 			if (botCache.data.rolePoints[roleID])
 				str += `● ${roleMention(roleID)} (${
 					botCache.data.rolePoints[roleID]
 				}점)\n`
-		})
 
 		return str
 	}

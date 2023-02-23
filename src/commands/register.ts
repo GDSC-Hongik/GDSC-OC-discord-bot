@@ -48,25 +48,21 @@ export class RegisterCommand extends Command {
 		// create user
 
 		let roles: string[] = []
-		if (Array.isArray(interaction.member.roles)) {
+		if (Array.isArray(interaction.member.roles))
 			roles = interaction.member.roles
-		} else {
-			interaction.member.roles.cache.map((role) => {
+		else
+			for (const [, role] of interaction.member.roles.cache)
 				if (role.name !== "@everyone") roles.push(role.id)
-			})
-		}
+
 		const createUserResult = await createUser(uid, {
 			...defaultUser,
 			roles,
 		})
 		if (!createUserResult.success)
-			if (
-				createUserResult.reason === CreateUserFailReason.USER_ALREADY_EXISTS
-			) {
-				return this.replyFail(interaction, FailReason.AlreadyRegistered)
-			} else {
-				return this.replyFail(interaction, FailReason.InvalidUID)
-			}
+			return createUserResult.reason ===
+				CreateUserFailReason.USER_ALREADY_EXISTS
+				? this.replyFail(interaction, FailReason.AlreadyRegistered)
+				: this.replyFail(interaction, FailReason.InvalidUID)
 
 		// set user discord ID
 		setUserDiscordID(uid, interaction.user.id)

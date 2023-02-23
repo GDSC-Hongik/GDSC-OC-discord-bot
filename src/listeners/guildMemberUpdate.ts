@@ -25,10 +25,10 @@ export class GuildMemberUpdateListener extends Listener<
 		if (oldRolesCache.size >= newRolesCache.size) return
 
 		// loop through the roles and check which one was added
-		newRolesCache.map((role) => {
+		for (const [, role] of newRolesCache) {
 			if (oldRolesCache.has(role.id)) return
 			this.container.logger.info(`role "${role.id}" added to "${oldMember.id}"`)
-		})
+		}
 
 		await devRatingEvent({
 			type: DevRatingEvent.UPDATE_ROLE,
@@ -46,12 +46,12 @@ export class GuildMemberUpdateListener extends Listener<
 		if (oldRolesCache.size <= newRolesCache.size) return
 
 		// loop through the roles and check which one was removed
-		oldRolesCache.map((role) => {
+		for (const [, role] of oldRolesCache) {
 			if (newRolesCache.has(role.id)) return
 			this.container.logger.info(
 				`role "${role.id}" removed from "${oldMember.id}"`
 			)
-		})
+		}
 
 		await devRatingEvent({
 			type: DevRatingEvent.UPDATE_ROLE,
