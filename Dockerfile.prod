@@ -24,5 +24,5 @@ USER node
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/build/ .
-VOLUME lib/serviceAccountKey.json
+VOLUME /lib/serviceAccountKey.json
 CMD ["node", "."]
