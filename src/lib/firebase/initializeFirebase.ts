@@ -4,6 +4,7 @@ import { cert } from "firebase-admin/app"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore } from "firebase-admin/firestore"
 
+import { defaultAssignment } from "../../types/assignments"
 import serviceAccount from "../serviceAccountKey.json"
 import {
 	botCache,
@@ -70,10 +71,7 @@ async function initializeDB() {
 	// one document to exist
 
 	// init "/assignments"
-	createAssignment(
-		{ name: "", filePath: "", repository: "", closed: true },
-		"null"
-	)
+	createAssignment(defaultAssignment, "null")
 
 	// init "/posts"
 	createPost({ author: "", discord: false, likes: 0 }, "null")
