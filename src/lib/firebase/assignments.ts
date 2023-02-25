@@ -49,8 +49,12 @@ export async function getAssignment(
 	return undefined
 }
 
-export async function createAssignment(data: Assignment, id?: string) {
-	await setAssignment(data, id ? id : nanoid())
+export async function createAssignment(
+	data: Assignment,
+	_id?: string
+): Promise<[string, Assignment]> {
+	const id = _id ? _id : nanoid()
+	return [id, await setAssignment(data, id)]
 }
 
 export async function setAssignment(
