@@ -1,4 +1,5 @@
 import { auth } from "../firebase"
+import { githubCache } from "."
 
 /**
  * Converts firebase user UID to GitHub user UID (NOT USERNAME)
@@ -9,6 +10,8 @@ import { auth } from "../firebase"
 export default async function (
 	firebaseUID: string
 ): Promise<string | undefined> {
+	if (githubCache.ids[firebaseUID]) return githubCache.ids[firebaseUID]
+
 	const user = await auth.getUser(firebaseUID)
 
 	const gitHubData = user.providerData.find(
@@ -22,5 +25,5 @@ export default async function (
 		return undefined
 	}
 
-	return gitHubData.uid
+	return (githubCache.ids[firebaseUID] = gitHubData.uid)
 }
