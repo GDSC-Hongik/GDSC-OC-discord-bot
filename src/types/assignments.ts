@@ -7,6 +7,9 @@ export const assignmentSchema = z.object({
 
 	filePath: z.string(),
 
+	// array of user snowflake strings
+	members: z.array(z.string()),
+
 	closed: z.boolean(),
 })
 
@@ -16,5 +19,6 @@ export const defaultAssignment: Assignment = {
 	name: "",
 	repository: "",
 	filePath: "",
+	members: [],
 	closed: true,
 }

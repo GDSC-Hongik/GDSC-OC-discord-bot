@@ -4,13 +4,16 @@ import { Command } from "@sapphire/framework"
 import { ChatInputCommandInteraction } from "discord.js"
 import { PermissionFlagsBits } from "discord.js"
 
-import { createAssignment } from "../../lib/firebase"
+import { createAssignment, snowflake2UID } from "../../lib/firebase"
+import getSnowflakesFromString from "../../lib/getSnowflakesFromString"
+import removeDuplicates from "../../lib/removeDuplicates"
 import { Assignment } from "../../types/assignments"
 
-const Options = {
-	assignmentName: "과제-이름",
-	repoName: "repository-이름",
-	filePath: "파일-경로",
+enum Options {
+	assignmentName = "과제-이름",
+	repoName = "repository-이름",
+	filePath = "파일-경로",
+	members = "과제-인원",
 }
 
 export class PostingChannelConfigCommand extends Command {
@@ -39,6 +42,14 @@ export class PostingChannelConfigCommand extends Command {
 						.setDescription("과제 제출 확인시 확인할 파일의 경로")
 						.setRequired(true)
 				)
+				.addStringOption((option) =>
+					option
+						.setName(Options.members)
+						.setDescription(
+							"과제를 수행할 인원들의 @멘션. 등록된 사용자만 처리됩니다."
+						)
+						.setRequired(true)
+				)
 				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.setDMPermission(false)
 		)
@@ -57,11 +68,18 @@ export class PostingChannelConfigCommand extends Command {
 		if (!filePath)
 			return this.replyFail(interaction, "repository 이름이 누락되었습니다.")
 
+		const members = removeDuplicates<string>(
+			getSnowflakesFromString(
+				interaction.options.getString(Options.members)
+			).map(snowflake2UID)
+		)
+
 		// create assignment
 		const [assignmentID, assignmentData] = await createAssignment({
 			name: assignmentName,
 			repository: repoName,
 			filePath,
+			members,
 			closed: false,
 		})
 
