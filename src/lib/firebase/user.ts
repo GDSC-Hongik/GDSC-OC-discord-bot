@@ -14,9 +14,14 @@ export async function createUser(
 	| { success: true; user: User }
 	| { success: false; reason: CreateUserFailReason }
 > {
+	if (uid === "null") {
+		refs.users.doc(uid).set(defaultUser)
+		return { success: true, user: defaultUser }
+	}
+
 	// check if user exists in firebase auth
 	try {
-		if (uid !== "null") await auth.getUser(uid)
+		await auth.getUser(uid)
 	} catch {
 		console.error(
 			`Failed create user "${uid}" int firestore. User does not exist in firebase auth.`
