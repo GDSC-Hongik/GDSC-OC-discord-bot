@@ -57,17 +57,15 @@ export class PostingChannelConfigCommand extends Command {
 		if (!filePath)
 			return this.replyFail(interaction, "repository 이름이 누락되었습니다.")
 
-		const assignmentData: Assignment = {
+		// create assignment
+		const [assignmentID, assignmentData] = await createAssignment({
 			name: assignmentName,
 			repository: repoName,
 			filePath,
 			closed: false,
-		}
+		})
 
-		// create assignment
-		await createAssignment(assignmentData)
-
-		this.replySuccess(interaction, assignmentData)
+		this.replySuccess(interaction, assignmentID, assignmentData)
 	}
 
 	public async replyFail(
@@ -86,6 +84,7 @@ export class PostingChannelConfigCommand extends Command {
 
 	public async replySuccess(
 		interaction: ChatInputCommandInteraction,
+		assignmentID: string,
 		assignmentData: Assignment
 	): Promise<void> {
 		await interaction.reply({
@@ -95,7 +94,7 @@ export class PostingChannelConfigCommand extends Command {
 					description: `**과제 이름** - ${assignmentData.name}
 **repository 이름** - ${assignmentData.repository}
 **파일 경로** - ${assignmentData.filePath}`,
-				}),
+				}).setFooter({ text: `ID: ${assignmentID}` }),
 			],
 		})
 	}
