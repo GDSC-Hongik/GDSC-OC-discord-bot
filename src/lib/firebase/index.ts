@@ -18,7 +18,6 @@ import {
 } from "./assignments"
 import { getChannels, updateChannels } from "./channel"
 import fixSchema from "./fixSchema"
-import getGitHubUID from "./getGitHubUID"
 import initializeFirebase from "./initializeFirebase"
 import {
 	createPost,
@@ -115,7 +114,6 @@ export {
 	fixSchema,
 	getAssignment,
 	getChannels,
-	getGitHubUID,
 	getRolePoint,
 	getUser,
 	initializeFirebase,
