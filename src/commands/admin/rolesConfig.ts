@@ -119,7 +119,6 @@ export class RolesConfigCommand extends Command {
 					description: reason,
 				}),
 			],
-			ephemeral: true,
 		})
 	}
 
@@ -131,7 +130,6 @@ export class RolesConfigCommand extends Command {
 					description: reason,
 				}),
 			],
-			ephemeral: true,
 		})
 	}
 }

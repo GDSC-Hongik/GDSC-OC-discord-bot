@@ -167,7 +167,6 @@ export class PostingChannelConfigCommand extends Command {
 						: `과제 \`${args.id}\`을(를) 성공적으로 편집했습니다.`,
 				}),
 			],
-			ephemeral: true,
 		})
 	}
 }

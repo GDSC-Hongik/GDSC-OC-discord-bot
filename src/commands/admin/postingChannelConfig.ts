@@ -90,7 +90,6 @@ export class PostingChannelConfigCommand extends Command {
 					title: "정보공유 채널 설정 성공",
 				}),
 			],
-			ephemeral: true,
 		})
 	}
 
@@ -120,7 +119,6 @@ export class PostingChannelConfigCommand extends Command {
 					description,
 				}),
 			],
-			ephemeral: true,
 		})
 	}
 }

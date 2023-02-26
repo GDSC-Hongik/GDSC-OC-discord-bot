@@ -38,7 +38,6 @@ export class serverConfigCommand extends Command {
 					],
 				}),
 			],
-			ephemeral: true,
 		})
 	}
 }
