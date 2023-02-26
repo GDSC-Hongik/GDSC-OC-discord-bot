@@ -56,6 +56,7 @@ export class RegisterCommand extends Command {
 		const createUserResult = await createUser(uid, {
 			achievements: [],
 			attendance: [],
+			discordID: interaction.user.id,
 			points: 0,
 			posts: [],
 			roles,

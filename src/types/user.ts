@@ -8,6 +8,8 @@ export const userSchema = z.object({
 	// array of "YYYY/MM/DD" formatted string (time zone: KST)
 	attendance: z.array(z.string().regex(/\d\d\d\d[/]\d\d[/]\d\d/)),
 
+	discordID: z.string().regex(/\d+/),
+
 	// total spendable points. Integer. Can be negative.
 	points: z.number().int(),
 
@@ -23,6 +25,7 @@ export type User = z.infer<typeof userSchema>
 export const defaultUser: User = {
 	achievements: [],
 	attendance: [],
+	discordID: "0000000000000000000",
 	points: 0,
 	posts: [],
 	roles: [],
