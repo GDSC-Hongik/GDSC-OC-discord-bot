@@ -8,7 +8,6 @@ import {
 	CreateUserFailReason,
 	setUserDiscordID,
 } from "../lib/firebase"
-import { defaultUser } from "../types/user"
 
 const optionName = "코드"
 
@@ -55,7 +54,10 @@ export class RegisterCommand extends Command {
 				if (role.name !== "@everyone") roles.push(role.id)
 
 		const createUserResult = await createUser(uid, {
-			...defaultUser,
+			achievements: [],
+			attendance: [],
+			points: 0,
+			posts: [],
 			roles,
 		})
 		if (!createUserResult.success)
