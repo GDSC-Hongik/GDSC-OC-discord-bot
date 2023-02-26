@@ -3,11 +3,7 @@ import type { ChatInputCommand } from "@sapphire/framework"
 import { Command } from "@sapphire/framework"
 import type { ChatInputCommandInteraction } from "discord.js"
 
-import {
-	createUser,
-	CreateUserFailReason,
-	setUserDiscordID,
-} from "../lib/firebase"
+import { createUser, CreateUserFailReason } from "../lib/firebase"
 
 const optionName = "코드"
 
@@ -66,9 +62,6 @@ export class RegisterCommand extends Command {
 				CreateUserFailReason.USER_ALREADY_EXISTS
 				? this.replyFail(interaction, FailReason.AlreadyRegistered)
 				: this.replyFail(interaction, FailReason.InvalidUID)
-
-		// set user discord ID
-		setUserDiscordID(uid, interaction.user.id)
 
 		// return feedback
 		this.replySuccess(interaction)

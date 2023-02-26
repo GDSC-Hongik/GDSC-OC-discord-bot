@@ -1,6 +1,6 @@
 import { defaultUser, User } from "../../types/user"
 import { userSchema } from "../../types/user"
-import { auth, botCache, fixSchema, refs } from "."
+import { auth, botCache, fixSchema, refs, setUserDiscordID } from "."
 
 export enum CreateUserFailReason {
 	USER_NOT_IN_AUTH,
@@ -38,6 +38,7 @@ export async function createUser(
 
 	// create, cache, and return user document
 	userDocRef.set(data, { merge: true })
+	await setUserDiscordID(uid, data.discordID)
 	return {
 		success: true,
 		user: (await cacheUser(uid, data)) || data,
