@@ -28,9 +28,14 @@ import {
 	UpdatePostFailReason,
 } from "./posts"
 import { getRolePoint, setRolePoint } from "./rolePoints"
-import setUserDiscordID from "./setUserDiscordID"
-import snowflake2UID from "./snowflake2UID"
-import { createUser, CreateUserFailReason, getUser, setUser } from "./user"
+import {
+	createUser,
+	CreateUserFailReason,
+	getUser,
+	setUser,
+	setUserDiscordID,
+	snowflake2UID,
+} from "./user"
 
 export let auth: Auth
 export let db: Firestore

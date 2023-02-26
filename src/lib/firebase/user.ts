@@ -1,6 +1,6 @@
 import { defaultUser, User } from "../../types/user"
 import { userSchema } from "../../types/user"
-import { auth, botCache, fixSchema, refs, setUserDiscordID } from "."
+import { auth, botCache, fixSchema, refs } from "."
 
 export enum CreateUserFailReason {
 	USER_NOT_IN_AUTH,
@@ -94,4 +94,23 @@ export async function setUser(uid: string, data: User): Promise<void> {
 
 	userDoc.ref.set(data, { merge: true })
 	cacheUser(uid, data)
+}
+
+/**
+ * Fetch a firebase user's UID associated with the given discord snowflake
+ */
+export function snowflake2UID(
+	discordID: string | undefined | null
+): string | undefined {
+	if (!discordID) return undefined
+
+	return botCache.data.snowflake2uid[discordID]
+}
+
+/**
+ * Associates a discord user ID with a firebase user UID
+ */
+export async function setUserDiscordID(uid: string, discordSnowflake: string) {
+	await refs.snowflake2uid.set({ [discordSnowflake]: uid }, { merge: true })
+	botCache.data.snowflake2uid[discordSnowflake] = uid
 }
