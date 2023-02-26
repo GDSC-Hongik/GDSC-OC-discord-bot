@@ -5,6 +5,7 @@ import { getAuth } from "firebase-admin/auth"
 import { getFirestore } from "firebase-admin/firestore"
 
 import { defaultAssignment } from "../../types/assignments"
+import { defaultUser } from "../../types/user"
 import serviceAccount from "../serviceAccountKey.json"
 import {
 	botCache,
@@ -77,5 +78,5 @@ async function initializeDB() {
 	createPost({ author: "", discord: false, likes: 0 }, "null")
 
 	// init "/users"
-	createUser("null")
+	createUser("null", defaultUser)
 }
