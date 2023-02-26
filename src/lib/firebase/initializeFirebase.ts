@@ -4,20 +4,8 @@ import { cert } from "firebase-admin/app"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore } from "firebase-admin/firestore"
 
-import { defaultAssignment } from "../../types/assignments"
-import { defaultUser } from "../../types/user"
 import serviceAccount from "../serviceAccountKey.json"
-import {
-	botCache,
-	createAssignment,
-	createPost,
-	createUser,
-	db,
-	refs,
-	setAuth,
-	setDB,
-	setRefs,
-} from "."
+import { botCache, db, refs, setAuth, setDB, setRefs } from "."
 
 export default async function () {
 	console.log("Initializing Firebase")
@@ -67,16 +55,4 @@ async function initializeDB() {
 		if (JSON.stringify(data) !== JSON.stringify(botCache.data[key]))
 			await refs[key].set(botCache.data[key], { merge: true })
 	}
-
-	// the following data exist because firestore collections must have at least
-	// one document to exist
-
-	// init "/assignments"
-	createAssignment(defaultAssignment, "null")
-
-	// init "/posts"
-	createPost({ author: "", discord: false, likes: 0 }, "null")
-
-	// init "/users"
-	createUser("null", defaultUser)
 }

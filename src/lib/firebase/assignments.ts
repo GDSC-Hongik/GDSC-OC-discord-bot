@@ -18,12 +18,7 @@ export async function listAssignments(
 	for (const doc of querySnapshot.docs) {
 		const assignment = await getAssignment(doc.id)
 
-		if (
-			!assignment ||
-			// exclude firestore filler data
-			doc.id === "null"
-		)
-			continue
+		if (!assignment) continue
 
 		data[doc.id] = assignment
 	}
