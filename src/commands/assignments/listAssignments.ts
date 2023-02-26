@@ -52,6 +52,7 @@ export class PostingChannelConfigCommand extends Command {
 **ID** - ${assignmentID}
 **GitHub 레포 이름** - ${assignment.repository}
 **파일 경로** - ${assignment.filePath}
+**인원** - ${assignment.members.length}명 (</과제-제출-확인:1079057351618863104>으로 확인)
 **마감** - ${assignment.closed}
 
 `
