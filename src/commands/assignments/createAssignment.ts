@@ -16,7 +16,7 @@ enum Options {
 	members = "과제-인원",
 }
 
-export class PostingChannelConfigCommand extends Command {
+export class CreateAssignmentCommand extends Command {
 	public override registerApplicationCommands(
 		registry: ChatInputCommand.Registry
 	) {

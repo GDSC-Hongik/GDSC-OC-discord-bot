@@ -6,7 +6,7 @@ import { PermissionFlagsBits } from "discord.js"
 
 import { botCache } from "../../lib/firebase"
 
-export class serverConfigCommand extends Command {
+export class ServerConfigCommand extends Command {
 	public override registerApplicationCommands(
 		registry: ChatInputCommand.Registry
 	) {

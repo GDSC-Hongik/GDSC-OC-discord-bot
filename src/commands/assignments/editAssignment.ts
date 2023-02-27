@@ -30,7 +30,7 @@ const Options = {
 	deleteAssignment: "삭제",
 }
 
-export class PostingChannelConfigCommand extends Command {
+export class EditAssignmentCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options })
 	}

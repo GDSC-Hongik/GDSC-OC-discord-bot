@@ -20,7 +20,7 @@ const Options = {
 	id: "과제-id",
 }
 
-export class SignUpCommand extends Command {
+export class CheckAssignmentCommand extends Command {
 	public override registerApplicationCommands(
 		registry: ChatInputCommand.Registry
 	) {

@@ -11,7 +11,7 @@ const Options = {
 	showClosed: "마감된-과제-보이기",
 }
 
-export class PostingChannelConfigCommand extends Command {
+export class ListAssignmentsCommand extends Command {
 	public override registerApplicationCommands(
 		registry: ChatInputCommand.Registry
 	) {
