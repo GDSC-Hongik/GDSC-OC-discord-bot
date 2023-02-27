@@ -72,7 +72,7 @@ export class RegisterCommand extends Command {
 			embeds: [
 				new EmbedBuilder({
 					title: "등록 완료!",
-					description: "</프로필:1065974421203976202> 커맨드를 이용해보세요",
+					description: "`</프로필>` 커맨드를 이용해보세요",
 				}),
 			],
 			ephemeral: true,
@@ -93,7 +93,7 @@ export class RegisterCommand extends Command {
 
 			case FailReason.InvalidUID: {
 				description =
-					"본인 인증 코드가 우효하지 않습니다. </가입:1069853137529208852> 후 이용해주세요."
+					"본인 인증 코드가 우효하지 않습니다. `</가입>` 후 이용해주세요."
 				break
 			}
 

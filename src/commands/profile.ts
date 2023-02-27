@@ -37,7 +37,7 @@ export class ProfileCommand extends Command {
 				new EmbedBuilder({
 					title: "등록된 계정이 없습니다!",
 					description: `이 디스코드 계정에 연동된 계정이 없습니다.
-<${process.env.SIGN_UP_URL}>에서 회원가입 후 </등록:1072386843506651197> 커맨드를 이용해 계정을 연동시켜주세요`,
+<${process.env.SIGN_UP_URL}>에서 회원가입 후 \`</등록>\` 커맨드를 이용해 계정을 연동시켜주세요`,
 				}),
 			],
 			fetchReply: true,
