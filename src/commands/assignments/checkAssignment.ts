@@ -52,7 +52,7 @@ export class CheckAssignmentCommand extends Command {
 		await this.replySuccess(interaction, assignmentState)
 	}
 
-	public async parseArgs(
+	async parseArgs(
 		interaction: ChatInputCommandInteraction
 	): Promise<void | Args> {
 		const assignmentID = interaction.options.getString(Options.id)
@@ -72,7 +72,7 @@ export class CheckAssignmentCommand extends Command {
 	/**
 	 * Returns either the current assignment state or an error message
 	 */
-	public async checkAssignments(args: Args): Promise<AssignmentState | string> {
+	async checkAssignments(args: Args): Promise<AssignmentState | string> {
 		const result: AssignmentState = {}
 
 		for (const uid of args.assignment.members) {
@@ -92,7 +92,7 @@ export class CheckAssignmentCommand extends Command {
 		return result
 	}
 
-	public async replyFail(
+	async replyFail(
 		interaction: ChatInputCommandInteraction,
 		reason: string
 	): Promise<void> {
@@ -110,7 +110,7 @@ export class CheckAssignmentCommand extends Command {
 	 * Sends a paginated list of assignment submission status.
 	 * Discord embed description has a character length of 4096.
 	 */
-	public async replySuccess(
+	async replySuccess(
 		interaction: ChatInputCommandInteraction,
 		assignmentState: AssignmentState
 	): Promise<void> {

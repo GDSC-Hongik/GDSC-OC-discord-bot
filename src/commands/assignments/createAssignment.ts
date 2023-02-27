@@ -86,7 +86,7 @@ export class CreateAssignmentCommand extends Command {
 		this.replySuccess(interaction, assignmentID, assignmentData)
 	}
 
-	public async replyFail(
+	async replyFail(
 		interaction: ChatInputCommandInteraction,
 		reason: string
 	): Promise<void> {
@@ -100,7 +100,7 @@ export class CreateAssignmentCommand extends Command {
 		})
 	}
 
-	public async replySuccess(
+	async replySuccess(
 		interaction: ChatInputCommandInteraction,
 		assignmentID: string,
 		assignmentData: Assignment

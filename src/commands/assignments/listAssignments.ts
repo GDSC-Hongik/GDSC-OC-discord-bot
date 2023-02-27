@@ -39,7 +39,7 @@ export class ListAssignmentsCommand extends Command {
 	 * Returns a paginated list of assignment descriptions.
 	 * Discord embed description has a character length of 4096.
 	 */
-	public formatAssignments(assignments: {
+	formatAssignments(assignments: {
 		[assignmentID: string]: Assignment
 	}): string[] {
 		const result: string[] = [""]
@@ -68,7 +68,7 @@ export class ListAssignmentsCommand extends Command {
 		return result
 	}
 
-	public async replySuccess(
+	async replySuccess(
 		interaction: ChatInputCommandInteraction,
 		showClosed: boolean
 	): Promise<void> {

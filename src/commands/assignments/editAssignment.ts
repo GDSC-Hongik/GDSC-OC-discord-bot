@@ -139,7 +139,7 @@ export class EditAssignmentCommand extends Command {
 		return { id, name, repository, filePath, closed, deleteAssignment }
 	}
 
-	public async replyFail(
+	async replyFail(
 		interaction: ChatInputCommandInteraction,
 		reason: string
 	): Promise<void> {
@@ -153,7 +153,7 @@ export class EditAssignmentCommand extends Command {
 		})
 	}
 
-	public async replySuccess(
+	async replySuccess(
 		interaction: ChatInputCommandInteraction,
 		args: Args
 	): Promise<void> {
