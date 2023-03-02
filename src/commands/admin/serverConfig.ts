@@ -22,8 +22,8 @@ export class ServerConfigCommand extends Command {
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
 		const infoSharingChannels = botCache.data.channels.infoSharing
 			? botCache.data.channels.infoSharing
-					.map((channel) => `- ${channelMention(channel)}\n`)
-					.join()
+					.map((channel) => `- ${channelMention(channel)}`)
+					.join("\n")
 			: "없음"
 
 		await interaction.reply({
