@@ -36,9 +36,7 @@ async function initializeReferences() {
 
 export async function initializeDB(): Promise<void> {
 	// bruh why doesn't js have built in set intersection feature
-	const dataCacheKeys = Object.keys(refs).filter((key) =>
-		Object.keys(botCache.data).includes(key)
-	)
+	const dataCacheKeys = Object.keys(refs).filter((key) => key in botCache.data)
 
 	for (const _key of dataCacheKeys) {
 		const key = _key as keyof typeof refs & keyof typeof botCache.data
