@@ -18,7 +18,7 @@ import {
 } from "./assignments"
 import { getChannels, updateChannels } from "./channel"
 import fixSchema from "./fixSchema"
-import initializeFirebase from "./initializeFirebase"
+import initializeFirebase, { initializeDB } from "./initializeFirebase"
 import {
 	createPost,
 	CreatePostFailReason,
@@ -121,6 +121,7 @@ export {
 	getChannels,
 	getRolePoint,
 	getUser,
+	initializeDB,
 	initializeFirebase,
 	listAssignments,
 	setAssignment,
