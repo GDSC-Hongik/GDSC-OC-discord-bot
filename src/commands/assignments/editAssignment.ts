@@ -31,10 +31,6 @@ const Options = {
 }
 
 export class EditAssignmentCommand extends Command {
-	public constructor(context: Command.Context, options: Command.Options) {
-		super(context, { ...options })
-	}
-
 	public override registerApplicationCommands(
 		registry: ChatInputCommand.Registry
 	) {
