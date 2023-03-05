@@ -7,7 +7,7 @@ export const assignmentSchema = z.object({
 
 	filePath: z.string(),
 
-	// array of user snowflake strings
+	// array of firebase user UID strings
 	members: z.array(z.string()),
 
 	closed: z.boolean(),
