@@ -17,7 +17,7 @@ export class ListAssignmentsCommand extends Command {
 	) {
 		registry.registerChatInputCommand((builder) =>
 			builder
-				.setName("과제-나열")
+				.setName("과제-열람")
 				.setDescription("등록된 과제 나열")
 				.addBooleanOption((option) =>
 					option
