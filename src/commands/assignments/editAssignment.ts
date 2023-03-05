@@ -71,7 +71,7 @@ export class EditAssignmentCommand extends Command {
 	}
 
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const args = await this.getArguments(interaction)
+		const args = await this.parseArguments(interaction)
 		if (!args) return
 
 		const assignment = await getAssignment(args.id)
@@ -117,7 +117,7 @@ export class EditAssignmentCommand extends Command {
 			)
 	}
 
-	async getArguments(
+	async parseArguments(
 		interaction: ChatInputCommandInteraction
 	): Promise<void | Args> {
 		const id = interaction.options.getString(Options.id)
