@@ -10,24 +10,37 @@ import {
 	deleteAssignment,
 	getAssignment,
 	setAssignment,
+	snowflake2UID,
 } from "../../lib/firebase"
+import getSnowflakesFromString from "../../lib/getSnowflakesFromString"
+import removeDuplicates from "../../lib/removeDuplicates"
+import { Assignment } from "../../types/assignments"
 
 interface Args {
 	id: string
 	name: string | null
 	repository: string | null
 	filePath: string | null
+	memberOperation: MemberOperation | null
+	members: string[]
 	closed: boolean | null
 	deleteAssignment: boolean | null
 }
 
-const Options = {
-	id: "과제-id",
-	name: "과제-이름",
-	repository: "repository-이름",
-	filePath: "파일-경로",
-	closed: "마감",
-	deleteAssignment: "삭제",
+enum Options {
+	id = "과제-id",
+	name = "과제-이름",
+	repository = "repository-이름",
+	filePath = "파일-경로",
+	memberOperation = "멤버-작업",
+	members = "과제-인원",
+	closed = "마감",
+	deleteAssignment = "삭제",
+}
+
+enum MemberOperation {
+	add = "추가",
+	remove = "제거",
 }
 
 export class EditAssignmentCommand extends Command {
@@ -57,6 +70,26 @@ export class EditAssignmentCommand extends Command {
 						.setName(Options.filePath)
 						.setDescription("과제 제출 확인시 확인할 파일의 경로")
 				)
+				.addStringOption((option) =>
+					option
+						.setName(Options.memberOperation)
+						.setDescription("과제를 수행할 인원 추가/제거")
+						.setChoices(
+							{
+								name: MemberOperation.add,
+								value: MemberOperation.add,
+							},
+							{
+								name: MemberOperation.remove,
+								value: MemberOperation.remove,
+							}
+						)
+				)
+				.addStringOption((option) =>
+					option
+						.setName(Options.members)
+						.setDescription("추가/제거할 인원의 멘션")
+				)
 				.addBooleanOption((option) =>
 					option.setName(Options.closed).setDescription("과제 마감 상태")
 				)
@@ -81,18 +114,34 @@ export class EditAssignmentCommand extends Command {
 		if (args.deleteAssignment) {
 			return await this.deleteAssignment(interaction, args)
 		} else {
-			return await this.editAssignment(interaction, args)
+			return await this.editAssignment(interaction, args, assignment)
 		}
 	}
 
 	async editAssignment(
 		interaction: ChatInputCommandInteraction,
-		args: Args
+		args: Args,
+		assignment: Assignment
 	): Promise<void> {
+		let members = assignment.members
+
+		switch (args.memberOperation) {
+			case MemberOperation.add: {
+				members = removeDuplicates([...assignment.members, ...args.members])
+				break
+			}
+
+			case MemberOperation.remove: {
+				members = assignment.members.filter((item) => item in args.members)
+				break
+			}
+		}
+
 		await setAssignment(
 			{
 				name: args.name || undefined,
 				repository: args.repository || undefined,
+				members,
 				filePath: args.filePath || undefined,
 				closed: args.closed === null ? undefined : args.closed,
 			},
@@ -127,12 +176,35 @@ export class EditAssignmentCommand extends Command {
 		const name = interaction.options.getString(Options.name)
 		const repository = interaction.options.getString(Options.repository)
 		const filePath = interaction.options.getString(Options.filePath)
+		const memberOperation = interaction.options.getString(
+			Options.memberOperation
+		) as MemberOperation | null
+		const members = removeDuplicates<string>(
+			getSnowflakesFromString(
+				interaction.options.getString(Options.members)
+			).map(snowflake2UID)
+		)
 		const closed = interaction.options.getBoolean(Options.closed)
 		const deleteAssignment = interaction.options.getBoolean(
 			Options.deleteAssignment
 		)
 
-		return { id, name, repository, filePath, closed, deleteAssignment }
+		if (members.length && !memberOperation)
+			return await this.replyFail(
+				interaction,
+				"멤버 작업을 선택하지 않으셨습니다."
+			)
+
+		return {
+			id,
+			name,
+			repository,
+			filePath,
+			memberOperation,
+			members,
+			closed,
+			deleteAssignment,
+		}
 	}
 
 	async replyFail(
