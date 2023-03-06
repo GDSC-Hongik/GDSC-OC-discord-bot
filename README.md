@@ -1,4 +1,4 @@
-# GDSC 홍익 오픈 커뮤니티 디스코드 봇
+# GDSC Open Community 디스코드 봇
 
 ## 개발 세팅
 
