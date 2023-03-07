@@ -8,6 +8,7 @@ export const gdscUserSchema = z.object({
 	// array of "YYYY/MM/DD" formatted string (time zone: KST)
 	attendance: z.array(z.string().regex(/\d\d\d\d[/]\d\d[/]\d\d/)),
 
+	// discord user ID of the user
 	discordID: z.string().regex(/\d+/),
 
 	// total spendable points. Integer. Can be negative.
