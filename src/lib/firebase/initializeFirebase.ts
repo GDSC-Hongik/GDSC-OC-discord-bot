@@ -27,9 +27,9 @@ async function initializeReferences() {
 		achievementPoints: db.collection("data").doc("achievementPoints"),
 		activityPoints: db.collection("data").doc("activityPoints"),
 		channels: db.collection("data").doc("channels"),
+		emojis: db.collection("data").doc("emojis"),
 		rolePoints: db.collection("data").doc("rolePoints"),
 		snowflake2uid: db.collection("data").doc("snowflake2uid"),
-		posts: db.collection("posts"),
 		users: db.collection("users"),
 	})
 }

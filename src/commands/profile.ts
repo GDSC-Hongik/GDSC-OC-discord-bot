@@ -53,7 +53,7 @@ export class ProfileCommand extends Command {
 		const devRatingPoints = this.formatData(devRatingData.points)
 		const points = this.formatData(user.points)
 		const totalAttendanceCount = this.formatData(user.attendance.length)
-		const totalPostCount = this.formatData(user.posts.length)
+		const totalUpvoteCount = this.formatData(user.upvotesGiven.length)
 
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
@@ -64,7 +64,7 @@ DevRating: ${devRatingPoints}
 				{
 					name: "활동",
 					value: `출석: 총 ${totalAttendanceCount}일 ${lastAttendance}
-정보공유: ${totalPostCount}번`,
+총 upvote 횟수: ${totalUpvoteCount}번`,
 				},
 			],
 		})

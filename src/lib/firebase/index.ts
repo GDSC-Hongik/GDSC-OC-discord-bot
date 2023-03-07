@@ -19,14 +19,6 @@ import {
 import { getChannels, updateChannels } from "./channel"
 import fixSchema from "./fixSchema"
 import initializeFirebase, { initializeDB } from "./initializeFirebase"
-import {
-	createPost,
-	CreatePostFailReason,
-	deletePost,
-	DeletePostFailReason,
-	updatePost,
-	UpdatePostFailReason,
-} from "./posts"
 import { getRolePoint, setRolePoint } from "./rolePoints"
 import {
 	createUser,
@@ -45,12 +37,12 @@ export let refs = {
 	achievementPoints: {} as DocumentReference<DocumentData>,
 	activityPoints: {} as DocumentReference<DocumentData>,
 	channels: {} as DocumentReference<DocumentData>,
+	emojis: {} as DocumentReference<DocumentData>,
 	rolePoints: {} as DocumentReference<DocumentData>,
 	snowflake2uid: {} as DocumentReference<DocumentData>,
 
 	// collections
 	assignments: {} as CollectionReference<DocumentData>,
-	posts: {} as CollectionReference<DocumentData>,
 	users: {} as CollectionReference<DocumentData>,
 }
 
@@ -76,9 +68,8 @@ export const botCache: BotCache = {
 		activityPoints: {
 			[Activities.ATTENDANCE]: 1,
 
-			[Activities.POST_CREATE]: 5,
-			[Activities.POST_LIKE_RECEIVE]: 1,
-			[Activities.POST_LIKE_ADD]: 1,
+			[Activities.UPVOTE_RECEIVE]: 1,
+			[Activities.UPVOTE_ADD]: 1,
 
 			[Activities.ATTEND_STUDY]: 10,
 			[Activities.ATTEND_SEMINAR]: 10,
@@ -87,10 +78,12 @@ export const botCache: BotCache = {
 		channels: {
 			infoSharing: [],
 		},
+		emojis: {
+			upvote: "<:gdsc:1082385810243993610>",
+		},
 		rolePoints: {},
 		snowflake2uid: {},
 	},
-	posts: {},
 	users: {},
 }
 
@@ -109,13 +102,9 @@ export function setRefs(newRefs: typeof refs) {
 
 export {
 	createAssignment,
-	createPost,
-	CreatePostFailReason,
 	createUser,
 	CreateUserFailReason,
 	deleteAssignment,
-	deletePost,
-	DeletePostFailReason,
 	fixSchema,
 	getAssignment,
 	getChannels,
@@ -130,6 +119,4 @@ export {
 	setUserDiscordID,
 	snowflake2UID,
 	updateChannels,
-	updatePost,
-	UpdatePostFailReason,
 }

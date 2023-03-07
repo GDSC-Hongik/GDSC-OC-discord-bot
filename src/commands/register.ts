@@ -54,8 +54,8 @@ export class RegisterCommand extends Command {
 			attendance: [],
 			discordID: interaction.user.id,
 			points: 0,
-			posts: [],
 			roles,
+			upvotesGiven: {},
 		})
 		if (!createUserResult.success)
 			return createUserResult.reason ===

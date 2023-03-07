@@ -13,11 +13,11 @@ export const userSchema = z.object({
 	// total spendable points. Integer. Can be negative.
 	points: z.number().int(),
 
-	// array of post IDs
-	posts: z.array(z.string().regex(/[a-zA-Z0-9]+/)),
-
 	// array of discord role IDs
 	roles: z.array(z.string().regex(/\d+/)),
+
+	// map of upvoted URL to emojis
+	upvotesGiven: z.record(z.string()),
 })
 
 export type User = z.infer<typeof userSchema>
@@ -27,6 +27,6 @@ export const defaultUser: User = {
 	attendance: [],
 	discordID: "0000000000000000000",
 	points: 0,
-	posts: [],
 	roles: [],
+	upvotesGiven: {},
 }

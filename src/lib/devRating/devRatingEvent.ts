@@ -1,7 +1,4 @@
-import infoPostLikeAdd from "./infoPostLikeAdd"
-import infoPostLikeRemove from "./infoPostLikeRemove"
-import infoPostCreate from "./postCreate"
-import infoPostDelete from "./postDelete"
+import { upvoteAdd, upvoteRemove } from "./parseReaction"
 import updateAttendance from "./updateAttendance"
 import updateRole from "./updateRole"
 
@@ -15,11 +12,11 @@ export enum DevRatingEvent {
 	// 정보공유 포스트 삭제
 	POST_DELETE,
 
-	// 정보공유 포스트에 좋아요가 추가됨
-	POST_LIKE_ADD,
+	// 좋아요가 추가
+	UPVOTE_ADD,
 
-	// 정보공유 포스트에 좋아요가 제거됨
-	POST_LIKE_REMOVE,
+	// 좋아요가 제거
+	UPVOTE_REMOVE,
 
 	// 역할 정보 갱신
 	UPDATE_ROLE,
@@ -31,20 +28,12 @@ type DevRatingEventPayload =
 			data: Parameters<typeof updateAttendance>
 	  }
 	| {
-			type: DevRatingEvent.POST_CREATE
-			data: Parameters<typeof infoPostCreate>
+			type: DevRatingEvent.UPVOTE_ADD
+			data: Parameters<typeof upvoteAdd>
 	  }
 	| {
-			type: DevRatingEvent.POST_DELETE
-			data: Parameters<typeof infoPostDelete>
-	  }
-	| {
-			type: DevRatingEvent.POST_LIKE_ADD
-			data: Parameters<typeof infoPostLikeAdd>
-	  }
-	| {
-			type: DevRatingEvent.POST_LIKE_REMOVE
-			data: Parameters<typeof infoPostLikeRemove>
+			type: DevRatingEvent.UPVOTE_REMOVE
+			data: Parameters<typeof upvoteRemove>
 	  }
 	| {
 			type: DevRatingEvent.UPDATE_ROLE
@@ -58,23 +47,13 @@ export default async function (payload: DevRatingEventPayload) {
 			break
 		}
 
-		case DevRatingEvent.POST_CREATE: {
-			await infoPostCreate(...payload.data)
+		case DevRatingEvent.UPVOTE_ADD: {
+			await upvoteAdd(...payload.data)
 			break
 		}
 
-		case DevRatingEvent.POST_DELETE: {
-			await infoPostDelete(...payload.data)
-			break
-		}
-
-		case DevRatingEvent.POST_LIKE_ADD: {
-			await infoPostLikeAdd(...payload.data)
-			break
-		}
-
-		case DevRatingEvent.POST_LIKE_REMOVE: {
-			await infoPostLikeRemove(...payload.data)
+		case DevRatingEvent.UPVOTE_REMOVE: {
+			await upvoteRemove(...payload.data)
 			break
 		}
 

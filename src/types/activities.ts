@@ -8,9 +8,8 @@ export enum Activities {
 
 	// knowledge sharing activities
 
-	POST_CREATE = "lxIe5uHH",
-	POST_LIKE_RECEIVE = "RSvP35f7",
-	POST_LIKE_ADD = "tEM4TM2k",
+	UPVOTE_ADD = "tEM4TM2k",
+	UPVOTE_RECEIVE = "RSvP35f7",
 
 	// scholar
 
