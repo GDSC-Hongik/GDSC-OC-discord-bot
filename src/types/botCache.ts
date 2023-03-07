@@ -1,7 +1,7 @@
 import type { Achievements } from "./achievements"
 import type { Activities } from "./activities"
 import { Assignment } from "./assignments"
-import type { User } from "./user"
+import type { GDSCUser } from "./user"
 
 export interface ChannelsCache {
 	infoSharing: string[]
@@ -21,5 +21,5 @@ export default interface BotCache {
 		rolePoints: { [key: string]: number }
 		snowflake2uid: { [key: string]: string }
 	}
-	users: { [key: string]: User }
+	users: { [key: string]: GDSCUser }
 }

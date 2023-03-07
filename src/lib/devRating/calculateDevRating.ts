@@ -1,5 +1,5 @@
 import { devRating2Tier, Tier, tierSchema } from "../../types/tier"
-import { User } from "../../types/user"
+import { GDSCUser } from "../../types/user"
 import { botCache } from "../firebase"
 
 /**
@@ -8,7 +8,7 @@ import { botCache } from "../firebase"
  *   where x = 1 as of now
  */
 export default async function (
-	user: User
+	user: GDSCUser
 ): Promise<{ points: number; tier: Tier }> {
 	const rolePoints = calculateRolePoints(user)
 	const achievementPoints = calculateAchievementPoints(user)
@@ -22,7 +22,7 @@ export default async function (
 	}
 }
 
-function calculateRolePoints(user: User): number {
+function calculateRolePoints(user: GDSCUser): number {
 	let rolePoints = 0
 
 	for (const role of user.roles)
@@ -32,7 +32,7 @@ function calculateRolePoints(user: User): number {
 	return rolePoints
 }
 
-function calculateAchievementPoints(user: User): number {
+function calculateAchievementPoints(user: GDSCUser): number {
 	let achievementPoints = 0
 
 	for (const achievement of user.achievements)

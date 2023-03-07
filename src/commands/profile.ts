@@ -7,7 +7,7 @@ import { calculateDevRating } from "../lib/devRating"
 import { botCache, getUser, snowflake2UID } from "../lib/firebase"
 import { AchievementNames, Achievements } from "../types/achievements"
 import { Tier, tierSchema } from "../types/tier"
-import type { User } from "../types/user"
+import type { GDSCUser } from "../types/user"
 
 export class ProfileCommand extends Command {
 	public override registerApplicationCommands(
@@ -44,7 +44,7 @@ export class ProfileCommand extends Command {
 		})
 	}
 
-	async replyProfile(interaction: ChatInputCommandInteraction, user: User) {
+	async replyProfile(interaction: ChatInputCommandInteraction, user: GDSCUser) {
 		const devRatingData = await calculateDevRating(user)
 		const lastAttendance = user.attendance.at(-1)
 			? `(마지막 출석: ${user.attendance.at(-1)})`

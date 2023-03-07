@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import { achievementsSchema } from "./achievements"
 
-export const userSchema = z.object({
+export const gdscUserSchema = z.object({
 	achievements: z.array(achievementsSchema),
 
 	// array of "YYYY/MM/DD" formatted string (time zone: KST)
@@ -20,9 +20,9 @@ export const userSchema = z.object({
 	upvotesGiven: z.record(z.string()),
 })
 
-export type User = z.infer<typeof userSchema>
+export type GDSCUser = z.infer<typeof gdscUserSchema>
 
-export const defaultUser: User = {
+export const defaultGDSCUser: GDSCUser = {
 	achievements: [],
 	attendance: [],
 	discordID: "0000000000000000000",

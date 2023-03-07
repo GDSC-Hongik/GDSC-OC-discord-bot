@@ -1,5 +1,5 @@
-import { defaultUser, User } from "../../types/user"
-import { userSchema } from "../../types/user"
+import { defaultGDSCUser, GDSCUser } from "../../types/user"
+import { gdscUserSchema } from "../../types/user"
 import { auth, botCache, fixSchema, refs } from "."
 
 export enum CreateUserFailReason {
@@ -9,9 +9,9 @@ export enum CreateUserFailReason {
 
 export async function createUser(
 	uid: string,
-	data: User
+	data: GDSCUser
 ): Promise<
-	| { success: true; user: User }
+	| { success: true; user: GDSCUser }
 	| { success: false; reason: CreateUserFailReason }
 > {
 	// check if user exists in firebase auth
@@ -45,8 +45,11 @@ export async function createUser(
 	}
 }
 
-async function cacheUser(uid: string, user: User): Promise<User | undefined> {
-	const parseResult = userSchema.safeParse(user)
+async function cacheUser(
+	uid: string,
+	user: GDSCUser
+): Promise<GDSCUser | undefined> {
+	const parseResult = gdscUserSchema.safeParse(user)
 
 	if (parseResult.success) return (botCache.users[uid] = parseResult.data)
 
@@ -58,13 +61,16 @@ async function cacheUser(uid: string, user: User): Promise<User | undefined> {
 		)}`
 	)
 
-	const fixResult = await fixSchema<User>(refs.users.doc(uid), defaultUser)
+	const fixResult = await fixSchema<GDSCUser>(
+		refs.users.doc(uid),
+		defaultGDSCUser
+	)
 	if (fixResult.success) return (botCache.users[uid] = fixResult.data)
 
 	return undefined
 }
 
-export async function getUser(uid: string): Promise<User | undefined> {
+export async function getUser(uid: string): Promise<GDSCUser | undefined> {
 	// return cached data if it exists
 	if (botCache.users[uid]) return botCache.users[uid]
 
@@ -72,13 +78,13 @@ export async function getUser(uid: string): Promise<User | undefined> {
 	const userDoc = await refs.users.doc(uid).get()
 
 	// return user data if it exists
-	if (userDoc.exists) return await cacheUser(uid, userDoc.data() as User)
+	if (userDoc.exists) return await cacheUser(uid, userDoc.data() as GDSCUser)
 
 	// return undefined if the user does not exist in the DB
 	return undefined
 }
 
-export async function setUser(uid: string, data: User): Promise<void> {
+export async function setUser(uid: string, data: GDSCUser): Promise<void> {
 	// fetch user document from firestore
 	const userDoc = await refs.users.doc(uid).get()
 

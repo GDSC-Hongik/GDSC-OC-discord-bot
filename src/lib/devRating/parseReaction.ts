@@ -6,7 +6,7 @@ import type {
 } from "discord.js"
 
 import { Activities } from "../../types/activities"
-import type { User as GDSCUser } from "../../types/user"
+import type { GDSCUser } from "../../types/user"
 import { botCache, getUser, setUser, snowflake2UID } from "../firebase"
 
 interface Args {

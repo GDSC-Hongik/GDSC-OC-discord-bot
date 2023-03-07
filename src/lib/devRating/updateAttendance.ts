@@ -2,7 +2,7 @@ import moment from "moment-timezone"
 
 import { Achievements } from "../../types/achievements"
 import { Activities } from "../../types/activities"
-import type { User } from "../../types/user"
+import type { GDSCUser } from "../../types/user"
 import { botCache, getUser, setUser, snowflake2UID } from "../firebase"
 import snowflake2Time from "../snowflake2Time"
 
@@ -33,7 +33,7 @@ export default async function (
 	return { success: true }
 }
 
-async function updateUserData(uid: string, user: User, YYYYMMDD: string) {
+async function updateUserData(uid: string, user: GDSCUser, YYYYMMDD: string) {
 	// update user attendance
 	user.attendance.push(YYYYMMDD)
 
