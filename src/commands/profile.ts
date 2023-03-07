@@ -53,7 +53,7 @@ export class ProfileCommand extends Command {
 		const devRatingPoints = this.formatData(devRatingData.points)
 		const points = this.formatData(user.points)
 		const totalAttendanceCount = this.formatData(user.attendance.length)
-		const totalUpvoteCount = this.formatData(user.upvotesGiven.length)
+		const totalUpvoteCount = user.upvotesGiven.length
 
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
