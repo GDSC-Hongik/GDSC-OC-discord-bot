@@ -10,7 +10,9 @@
 		"Hongik",
 		"UNRANKED",
 		"upvoted",
-		"upvotes"
+		"upvoters",
+		"upvotes",
+		"upvote"
 	],
 
 	"editor.codeActionsOnSave": {
