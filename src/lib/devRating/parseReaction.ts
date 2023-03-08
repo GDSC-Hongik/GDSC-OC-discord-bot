@@ -30,7 +30,11 @@ export async function upvoteAdd(
 	// parse arguments
 	const messageURL = reaction.message.url
 	const args = await parseArgs(reaction, user)
-	if (!args.success) return logError(messageURL, args.reason)
+	if (!args.success) {
+		await reaction.remove()
+		return logError(messageURL, args.reason)
+	}
+
 	const { upvoteAdderUID, upvoteAdder, upvoteReceiverUID, upvoteReceiver } =
 		args.data
 
