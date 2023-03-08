@@ -56,6 +56,7 @@ export class RegisterCommand extends Command {
 			points: 0,
 			roles,
 			upvotesGiven: {},
+			upvotesReceived: {},
 		})
 		if (!createUserResult.success)
 			return createUserResult.reason ===

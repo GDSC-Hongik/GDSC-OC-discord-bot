@@ -8,6 +8,7 @@ import type {
 import { Activities } from "../../types/activities"
 import type { GDSCUser } from "../../types/user"
 import { botCache, getUser, setUser, snowflake2UID } from "../firebase"
+import removeDuplicates from "../removeDuplicates"
 
 interface Args {
 	upvoteAdderUID: string
@@ -41,12 +42,18 @@ export async function upvoteAdd(
 	if (messageURL in upvoteAdder.upvotesGiven)
 		return logError(messageURL, "User has already upvoted the message")
 
-	// add points to the user who added the upvote
+	// update upvote adder data
+
 	upvoteAdder.points += botCache.data.activityPoints[Activities.UPVOTE_ADD]
 	upvoteAdder.upvotesGiven[messageURL] = reaction.emoji.toString()
 	setUser(upvoteAdderUID, upvoteAdder)
 
-	// add points to the user who received the upvote
+	// update upvote receiver data
+
+	upvoteReceiver.upvotesReceived[messageURL] = removeDuplicates([
+		...upvoteReceiver.upvotesReceived[messageURL],
+		user.id,
+	])
 	upvoteReceiver.points +=
 		botCache.data.activityPoints[Activities.UPVOTE_RECEIVE]
 	setUser(upvoteReceiverUID, upvoteReceiver)
@@ -72,12 +79,12 @@ export async function upvoteRemove(
 	// exit if the removed emoji was not used to upvote the message in the first place
 	if (reaction.emoji.toString() !== upvoteAdder.upvotesGiven[messageURL]) return
 
-	// remove points from the user who added the upvote
+	// update upvote adder data
 	upvoteAdder.points -= botCache.data.activityPoints[Activities.UPVOTE_ADD]
 	delete upvoteAdder.upvotesGiven[messageURL]
 	setUser(upvoteAdderUID, upvoteAdder)
 
-	// remove points from the user who received the upvote
+	// update upvote receiver data
 	upvoteReceiver.points -=
 		botCache.data.activityPoints[Activities.UPVOTE_RECEIVE]
 	setUser(upvoteReceiverUID, upvoteReceiver)

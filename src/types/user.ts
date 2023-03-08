@@ -17,8 +17,11 @@ export const gdscUserSchema = z.object({
 	// array of discord role IDs
 	roles: z.array(z.string().regex(/\d+/)),
 
-	// map of upvoted URL to emojis
+	// map of upvoted message URL to emojis
 	upvotesGiven: z.record(z.string()),
+
+	// { "upvoted message URL" : ["discord", "id", "of", "upvoters"] }
+	upvotesReceived: z.record(z.array(z.string())),
 })
 
 export type GDSCUser = z.infer<typeof gdscUserSchema>
@@ -30,4 +33,5 @@ export const defaultGDSCUser: GDSCUser = {
 	points: 0,
 	roles: [],
 	upvotesGiven: {},
+	upvotesReceived: {},
 }
