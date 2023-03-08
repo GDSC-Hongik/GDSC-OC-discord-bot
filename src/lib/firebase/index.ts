@@ -36,6 +36,7 @@ export let refs = {
 	// documents
 	achievementPoints: {} as DocumentReference<DocumentData>,
 	activityPoints: {} as DocumentReference<DocumentData>,
+	activityPointsLimit: {} as DocumentReference<DocumentData>,
 	channels: {} as DocumentReference<DocumentData>,
 	emojis: {} as DocumentReference<DocumentData>,
 	rolePoints: {} as DocumentReference<DocumentData>,
@@ -74,6 +75,16 @@ export const botCache: BotCache = {
 			[Activities.ATTEND_STUDY]: 10,
 			[Activities.ATTEND_SEMINAR]: 10,
 			[Activities.SEMINAR_SPEAKER]: 15,
+		},
+		activityPointsLimit: {
+			[Activities.ATTENDANCE]: Infinity,
+
+			[Activities.UPVOTE_RECEIVE]: 30,
+			[Activities.UPVOTE_ADD]: Infinity,
+
+			[Activities.ATTEND_STUDY]: Infinity,
+			[Activities.ATTEND_SEMINAR]: Infinity,
+			[Activities.SEMINAR_SPEAKER]: Infinity,
 		},
 		channels: {
 			infoSharing: [],

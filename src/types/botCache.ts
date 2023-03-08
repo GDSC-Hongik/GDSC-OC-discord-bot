@@ -16,6 +16,7 @@ export default interface BotCache {
 	data: {
 		achievementPoints: { [key in Achievements]: number }
 		activityPoints: { [key in Activities]: number }
+		activityPointsLimit: { [key in Activities]: number }
 		channels: ChannelsCache
 		emojis: EmojisCache
 		rolePoints: { [key: string]: number }

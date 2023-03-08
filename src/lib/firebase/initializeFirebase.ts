@@ -26,6 +26,7 @@ async function initializeReferences() {
 		assignments: db.collection("assignments"),
 		achievementPoints: db.collection("data").doc("achievementPoints"),
 		activityPoints: db.collection("data").doc("activityPoints"),
+		activityPointsLimit: db.collection("data").doc("activityPointsLimit"),
 		channels: db.collection("data").doc("channels"),
 		emojis: db.collection("data").doc("emojis"),
 		rolePoints: db.collection("data").doc("rolePoints"),

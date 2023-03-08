@@ -54,9 +54,16 @@ export async function upvoteAdd(
 		...upvoteReceiver.upvotesReceived[messageURL],
 		user.id,
 	])
-	upvoteReceiver.points +=
-		botCache.data.activityPoints[Activities.UPVOTE_RECEIVE]
-	setUser(upvoteReceiverUID, upvoteReceiver)
+	// add points to upvote receiver only if doing so will not go over the set limit
+	if (
+		(upvoteReceiver.upvotesReceived[messageURL].length + 1) *
+			botCache.data.activityPoints[Activities.UPVOTE_RECEIVE] <=
+		botCache.data.activityPointsLimit[Activities.UPVOTE_RECEIVE]
+	) {
+		upvoteReceiver.points +=
+			botCache.data.activityPoints[Activities.UPVOTE_RECEIVE]
+		setUser(upvoteReceiverUID, upvoteReceiver)
+	}
 }
 
 /**
