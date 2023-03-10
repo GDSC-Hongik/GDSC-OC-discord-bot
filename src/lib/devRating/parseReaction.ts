@@ -51,7 +51,9 @@ export async function upvoteAdd(
 	// update upvote receiver data
 
 	upvoteReceiver.upvotesReceived[messageURL] = removeDuplicates([
-		...upvoteReceiver.upvotesReceived[messageURL],
+		// upvoteReceiver.upvotesReceived[messageURL] being undefined causes error
+		// during runtime
+		...(upvoteReceiver.upvotesReceived[messageURL] || []),
 		user.id,
 	])
 	// add points to upvote receiver only if doing so will not go over the set limit
