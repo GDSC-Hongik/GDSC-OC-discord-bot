@@ -53,7 +53,8 @@ export class ProfileCommand extends Command {
 		const devRatingPoints = this.formatData(devRatingData.points)
 		const points = this.formatData(user.points)
 		const totalAttendanceCount = this.formatData(user.attendance.length)
-		const totalUpvoteCount = Object.keys(user.upvotesGiven).length
+		const totalUpvoteGiven = Object.keys(user.upvotesGiven).length
+		const totalUpvoteReceived = Object.keys(user.upvotesReceived).length
 
 		const embed = new EmbedBuilder({
 			title: `${interaction.user.username}님의 프로필`,
@@ -64,7 +65,8 @@ DevRating: ${devRatingPoints}
 				{
 					name: "활동",
 					value: `출석: 총 ${totalAttendanceCount}일 ${lastAttendance}
-총 upvote 횟수: ${totalUpvoteCount}번`,
+준 upvote 개수: ${totalUpvoteGiven}
+받은 upvote 개수: ${totalUpvoteReceived}`,
 				},
 			],
 		})
@@ -129,6 +131,7 @@ DevRating: ${devRatingPoints}
 		return str
 	}
 
+	// todo: fix not showing / calculating
 	formatRoles(roleIDs: string[]): string {
 		let str = ""
 
